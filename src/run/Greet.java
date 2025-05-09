@@ -1,11 +1,10 @@
-package org.example;
+package run;
 
-import picocli.CommandLine;
-
+//import picocli.CommandLine;
 import java.util.Scanner;
 
-@CommandLine.Command(name = "greet", mixinStandardHelpOptions = true, version = "1.0", description = "A simple command that greets the user of our beloved CLI APP")
-public class GreetUser implements Runnable {
+//@CommandLine.Command(name = "greet", mixinStandardHelpOptions = true, version = "1.0", description = "A simple command that greets the user of our beloved CLI APP")
+public class Greet implements Runnable {
 
     @Override
     public void run() {

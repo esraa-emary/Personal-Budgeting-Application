@@ -1,13 +1,11 @@
-package org.example;
+package income;
 
-public class Expense {
+public class Expenses {
     public String category;
     public double amount;
 
-    public Expense(double amount, String category) {
+    public Expenses(double amount, String category) {
         this.amount = amount;
         this.category = category;
     }
-
-
 }

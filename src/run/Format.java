@@ -1,6 +1,6 @@
-package org.example;
+package run;
 
-public class cliFormat {
+public class Format {
     public static String Bold = "\033[1m" ;
     public static String Reset = "\033[0m" ;
     public static String Underline = "\033[4m" ;

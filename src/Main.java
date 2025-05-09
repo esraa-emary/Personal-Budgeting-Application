@@ -1,44 +1,38 @@
-package org.example;
+import static run.Format.*;
+import static run.Menu.*;
 
-import static org.example.cliFormat.*;
+import run.Menu;
+import income.Budget;
 
 import java.util.Scanner;
 
-import static org.example.Menus.*;
-
 public class Main {
     public static void main(String[] args) {
-
-
         while (isMain) {
-
-
-            int choice = Menus.displayMainMenu();
+            int choice = Menu.displayMainMenu();
             Scanner external_input = new Scanner(System.in);
             switch (choice) {
 
                 case 1:
                     System.out.println("Now please enter the name of the file you would like to create with the proper extension: ");
                     String fileName = external_input.nextLine();
-                    BudgetTracker bt = new BudgetTracker(fileName);
+                    Budget bt = new Budget(fileName);
                     isContinue = true;
                     while (isContinue) {
-
-                        int subChoice = Menus.dispalySubMenu();
-                        Menus.options(subChoice, bt, fileName);
+                        int subChoice = Menu.dispalySubMenu();
+                        Menu.options(subChoice, bt, fileName);
                     }
                     break;
 
                 case 2:
                     System.out.println("Now enter the name of the file you would like to load with the proper extension: ");
                     String fileName2 = external_input.nextLine();
-                    BudgetTracker bt2 = new BudgetTracker(fileName2);
+                    Budget bt2 = new Budget(fileName2);
                     isContinue = true;
 
                     while (isContinue) {
-
-                        int subChoice2 = Menus.dispalySubMenu();
-                        Menus.options(subChoice2, bt2, fileName2);
+                        int subChoice2 = Menu.dispalySubMenu();
+                        Menu.options(subChoice2, bt2, fileName2);
                     }
                     break;
 

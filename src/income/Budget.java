@@ -1,58 +1,46 @@
-package org.example;
+package income;
 
-import org.example.Expense;
-import org.example.cliFormat;
-import org.w3c.dom.ls.LSOutput;
+import static run.Format.*;
 
 import java.io.*;
 import java.util.ArrayList;
-import static org.example.cliFormat.*;
 
-public class BudgetTracker {
+public class Budget {
+    public double totalExpense;
+    public ArrayList<Expenses> expenses = new ArrayList<>();
+    public double budget;
 
-    double totalExpense;
-    ArrayList<Expense> expenses = new ArrayList<>();
-    private double budget;
-
-    public BudgetTracker(double budget) {
+    public Budget(double budget) {
         this.budget = budget;
     }
 
-    public BudgetTracker(String filename) {
-
+    public Budget(String filename) {
         loadData(filename);
     }
 
-    void addExpense(double amount, String category) {
-
+    public void addExpense(double amount, String category) {
         if (totalExpense + amount > budget) {
-
             System.out.println("Exceeded budget, you cannot add this expense!");
         } else {
-            expenses.add(new Expense(amount, category));
+            expenses.add(new Expenses(amount, category));
             totalExpense += amount;
             System.out.println("Expense added: " + "$" + Bold + Blue + amount + Reset + " for " + Bold + Blue + category + Reset);
-
         }
-
     }
 
-
-    void setBudget(double budget) {
+    public void setBudget(double budget) {
         this.budget = budget;
     }
 
-    double getBudget() {
+    public double getBudget() {
         return budget;
     }
 
-    double getTotalExpense() {
+    public double getTotalExpense() {
         return totalExpense;
     }
 
-
     private void loadData(String filename) {
-
         File bAndE = new File(filename);
         try {
             if (bAndE.createNewFile()) {
@@ -70,21 +58,16 @@ public class BudgetTracker {
         }
 
         try (BufferedReader br = new BufferedReader(new FileReader(bAndE))) {
-
             String line;
             while ((line = br.readLine()) != null) {
-
                 if (line.startsWith("budget=")) {
-
                     budget = Double.parseDouble(line.split("=")[1]);
-
                 } else if (line.contains(":")) {
                     String[] parts = line.split(":");
                     double amount = Double.parseDouble(parts[0]);
                     String category = parts[1];
-                    expenses.add(new Expense(amount, category));
+                    expenses.add(new Expenses(amount, category));
                     totalExpense += amount;
-
                 }
             }
             System.out.println("Data loaded successfully!");
@@ -94,16 +77,12 @@ public class BudgetTracker {
     }
 
     public void saveData(String filename) {
-
         File bAndE = new File(filename);
         try {
             FileWriter writer = new FileWriter(filename);
-
-
-
             writer.write("budget=" + budget);
             writer.write("\n");
-            for (Expense expense : expenses) {
+            for (Expenses expense : expenses) {
                 writer.write(expense.amount + ":" + expense.category);
                 writer.write("\n");
             }
