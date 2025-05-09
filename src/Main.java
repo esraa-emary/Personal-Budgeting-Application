@@ -2,47 +2,45 @@ import static run.Format.*;
 import static run.Menu.*;
 
 import run.Menu;
-import income.Budget;
 
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
         while (isMain) {
-            int choice = Menu.displayMainMenu();
+            int choice = Menu.displayMainMenuAuthentication();
             Scanner external_input = new Scanner(System.in);
+            String userName, password, confirmPassword, mail;
             switch (choice) {
-
                 case 1:
-                    System.out.println("Now please enter the name of the file you would like to create with the proper extension: ");
-                    String fileName = external_input.nextLine();
-                    Budget bt = new Budget(fileName);
-                    isContinue = true;
-                    while (isContinue) {
-                        int subChoice = Menu.dispalySubMenu();
-                        Menu.options(subChoice, bt, fileName);
-                    }
+                    System.out.print("Enter username: ");
+                    userName = external_input.nextLine();
+                    System.out.print("Enter password: ");
+                    password = external_input.nextLine();
+
+
                     break;
 
                 case 2:
-                    System.out.println("Now enter the name of the file you would like to load with the proper extension: ");
-                    String fileName2 = external_input.nextLine();
-                    Budget bt2 = new Budget(fileName2);
-                    isContinue = true;
+                    System.out.print("Enter username: ");
+                    userName = external_input.nextLine();
+                    System.out.print("Enter E-mail: ");
+                    mail = external_input.nextLine();
+                    System.out.print("Enter password: ");
+                    password = external_input.nextLine();
+                    System.out.print("Enter confirm password: ");
+                    confirmPassword = external_input.nextLine();
 
-                    while (isContinue) {
-                        int subChoice2 = Menu.dispalySubMenu();
-                        Menu.options(subChoice2, bt2, fileName2);
-                    }
+
                     break;
 
                 case 3:
-                    System.out.println(Purple + Bold + "Now I guess it's time to save some bytes, just like we save some" + Green + " cash" + Reset + Bold + Purple + ". Goodbye!" + Reset);
+                    System.out.println(Purple + Bold + "THANKS FOR USING OUR APPLICATION!" + Reset);
                     isMain = false;
                     break;
 
                 default:
-                    System.out.println(Red + Bold + "Invalid option, please try again" + Reset);
+                    System.out.println(Red + Bold + "Invalid option, please try again\n" + Reset);
                     break;
             }
         }

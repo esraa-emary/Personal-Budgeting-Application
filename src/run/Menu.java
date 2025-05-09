@@ -12,31 +12,61 @@ public class Menu {
     public static boolean isMain = true;
     public static Scanner input = new Scanner(System.in);
 
-    public static int displayMainMenu() {
-        System.out.println(Bold + Cyan + "Welcome to PennyPilot\n" + Reset);
-        System.out.println(Bold + Cyan + ">>> " + Red + "Expenses" + Reset + Bold + " in check," + Green + " budget" + Reset + Bold + " on track" + Cyan + " <<<" + Reset);
+    public static int displayMainMenuAuthentication() {
+        System.out.println(Bold + Cyan + "<------- Welcome To our Personal Budgeting Application ------->\n" + Reset);
         System.out.println(Bold + "Please choose an option from the menu below: \n" + Reset);
-        System.out.println(Bold + "1 -> Create a new budget file" + Reset);
-        System.out.println(Bold + "2 -> Load an existing budget file" + Reset);
-        System.out.println(Bold + Red + "3 -> Exit" + Reset);
+        System.out.println(Bold + "1 -> Log-In." + Reset);
+        System.out.println(Bold + "2 -> Sign-Up." + Reset);
+        System.out.println(Bold + Red + "3 -> Exit." + Reset);
         System.out.printf(Bold + "choose an option: " + Reset);
         int choice = input.nextInt();
         input.nextLine();
         return choice;
     }
 
-    public static int dispalySubMenu() {
-        System.out.println("Now please choose an option from the menu below:");
-        System.out.println(Bold + "1 -> Set your budget" + Reset);
-        System.out.println(Bold + "2 -> Add Expense" + Reset);
-        System.out.println(Bold + "3 -> View Expenses" + Reset);
-        System.out.println(Bold + "4 -> View Remaining Budget" + Reset);
-        System.out.println(Bold + "5 -> Return to main menu" + Reset);
-        System.out.println(Bold + Red + "6 -> Exit\n" + Reset);
+    public static int displayMainMenuSections() {
+        System.out.println(Bold + Cyan + "Welcome To our Personal Budgeting Application\n" + Reset);
+        System.out.println(Bold + "Please choose an option from the menu below: \n" + Reset);
+        System.out.println(Bold + "1 -> Income Section." + Reset);
+        System.out.println(Bold + "2 -> Payment Section." + Reset);
+        System.out.println(Bold + Red + "3 -> Back." + Reset);
         System.out.printf(Bold + "choose an option: " + Reset);
-        int subChoice = input.nextInt();
+        int choice = input.nextInt();
         input.nextLine();
-        return subChoice;
+        return choice;
+    }
+
+    public static int displayMainMenuIncome() {
+        System.out.println(Bold + Cyan + "Welcome To Income Section\n" + Reset);
+        System.out.println(Bold + "Please choose an option from the menu below: \n" + Reset);
+        System.out.println(Bold + "1 -> Display Expenses." + Reset);
+        System.out.println(Bold + "2 -> Add Expense" + Reset);
+
+        System.out.println(Bold + "3 -> Display Budgets" + Reset);
+        System.out.println(Bold + "4 -> Add Budget." + Reset);
+
+        System.out.println(Bold + "5 -> Add Income." + Reset);
+        System.out.println(Bold + "6 -> Add Goal." + Reset);
+        System.out.println(Bold + "7 -> Add Reminder." + Reset);
+        System.out.println(Bold + Red + "8 -> Back." + Reset);
+        System.out.printf(Bold + "choose an option: " + Reset);
+        int choice = input.nextInt();
+        input.nextLine();
+        return choice;
+    }
+
+    public static int displayMainMenuPayment() {
+        System.out.println(Bold + Cyan + "Welcome To Payment Section\n" + Reset);
+        System.out.println(Bold + "Please choose an option from the menu below: \n" + Reset);
+        System.out.println(Bold + "1 -> Display Transactions." + Reset);
+        System.out.println(Bold + "2 -> Debt Repayment." + Reset);
+        System.out.println(Bold + Red + "3 -> Add Donate." + Reset);
+        System.out.println(Bold + Red + "4 -> Financial Reports." + Reset);
+        System.out.println(Bold + Red + "5 -> Back." + Reset);
+        System.out.printf(Bold + "choose an option: " + Reset);
+        int choice = input.nextInt();
+        input.nextLine();
+        return choice;
     }
 
     public static void options(int choice, Budget bt, String fileName) {
