@@ -1,0 +1,3 @@
+budget=6000.0
+600.0:CocaCola
+700.0:Pepsi

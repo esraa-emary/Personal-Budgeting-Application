@@ -1,0 +1,8 @@
+budget=6.0E8
+100.0:Car
+110.0:3omara
+2000.0:gas
+200.0:electricity
+200.0:natural gas
+100.0:water
+1600.0:food

@@ -1,0 +1,3 @@
+budget=1000.0
+600.0:Exam Papers
+300.0:student administartion
