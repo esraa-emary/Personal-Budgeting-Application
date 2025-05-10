@@ -10,12 +10,12 @@ import users.User;
 import java.util.Scanner;
 
 public class Main {
-    public static void subMenus(Scanner external_input) {
+    public static void subMenus(String filename) {
+        Scanner sub_menu_input = new Scanner(System.in);
         int choice, innerChoice;
 
-        System.out.println("\nEnter the name of the file to create with the proper extension: ");
-        String fileName = external_input.nextLine();
-        Budget bt = new Budget(fileName);
+//        System.out.println("\nEnter the name of the file to create with the proper extension: ");
+        Budget bt = new Budget(filename);
 
         choice = Menu.displayMainMenuSections();
         while (choice != 3) {
@@ -24,7 +24,7 @@ public class Main {
                     innerChoice = Menu.displayMainMenuIncome();
                     while (innerChoice != 12) {
                         System.out.print("\n");
-                        optionsIncome(innerChoice, bt, fileName, external_input);
+                        optionsIncome(innerChoice, bt, filename, sub_menu_input);
                         innerChoice = Menu.displayMainMenuIncome();
                     }
                     break;
@@ -33,7 +33,7 @@ public class Main {
                     innerChoice = Menu.displayMainMenuPayment();
                     while (innerChoice != 5) {
                         System.out.print("\n");
-                        optionsPayment(innerChoice, bt, fileName, external_input);
+                        optionsPayment(innerChoice, bt, filename, sub_menu_input);
                         innerChoice = Menu.displayMainMenuPayment();
                     }
                     break;
@@ -62,7 +62,9 @@ public class Main {
                     mail = external_input.nextLine();
                     System.out.print("Enter password: ");
                     password = external_input.nextLine();
-                    subMenus(external_input);
+                    User user = new User(mail,password);
+                    Login login = new Login(user);
+                    subMenus(login.getLoggedInUserFilename());
                     break;
 
                 case 2:
@@ -76,7 +78,7 @@ public class Main {
                     confirmPassword = external_input.nextLine();
                     User newUser = new User(userName, mail, password);
                     Signup signup = new Signup(newUser);
-                    subMenus(external_input);
+                    subMenus(signup.login.getLoggedInUserFilename());
                     break;
 
                 case 3:

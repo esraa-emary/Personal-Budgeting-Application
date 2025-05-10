@@ -11,4 +11,23 @@ public class User {
         this.email = email;
         this.password = password;
     }
+
+    public User(String email, String password) {
+        this.email = email;
+        this.password = password;
+        this.username = null;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getusername() {
+
+        return username;
+    }
 }
