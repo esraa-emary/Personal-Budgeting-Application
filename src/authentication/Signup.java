@@ -1,7 +1,7 @@
 package authentication;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+//import com.google.gson.Gson;
+//import com.google.gson.GsonBuilder;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -20,9 +20,9 @@ public class Signup {
         this.user = user;
     }
 
-    private void registerUser() {
-        Gson
-    }
+//    private void registerUser() {
+//        Gson
+//    }
     private String generateUniqueID(List<UserEntry> users) {
 
         int max_id = 0;

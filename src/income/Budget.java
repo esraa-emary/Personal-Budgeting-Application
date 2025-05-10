@@ -6,9 +6,13 @@ import java.io.*;
 import java.util.ArrayList;
 
 public class Budget {
-    public double totalExpense;
-    public ArrayList<Expenses> expenses = new ArrayList<>();
     public double budget;
+    public ArrayList<Expense> expenses = new ArrayList<>();
+    public double totalExpense = 0;
+    public ArrayList<Income> incomes = new ArrayList<>();
+    public double totalIncome = 0;
+    public ArrayList<Goal> goals = new ArrayList<>();
+    public ArrayList<Reminder> reminders = new ArrayList<>();
 
     public Budget(double budget) {
         this.budget = budget;
@@ -16,16 +20,6 @@ public class Budget {
 
     public Budget(String filename) {
         loadData(filename);
-    }
-
-    public void addExpense(double amount, String category) {
-        if (totalExpense + amount > budget) {
-            System.out.println("Exceeded budget, you cannot add this expense!");
-        } else {
-            expenses.add(new Expenses(amount, category));
-            totalExpense += amount;
-            System.out.println("Expense added: " + "$" + Bold + Blue + amount + Reset + " for " + Bold + Blue + category + Reset);
-        }
     }
 
     public void setBudget(double budget) {
@@ -36,8 +30,30 @@ public class Budget {
         return budget;
     }
 
-    public double getTotalExpense() {
-        return totalExpense;
+    public void addExpense(double amount, String category) {
+        if (totalExpense + amount > budget) {
+            System.out.println("Exceeded budget, you cannot add this expense!");
+        } else {
+            expenses.add(new Expense(amount, category));
+            totalExpense += amount;
+            System.out.println("Expense added: " + "$" + Bold + Blue + amount + Reset + " for " + Bold + Blue + category + Reset);
+        }
+    }
+
+    public void addIncome(double amount, String source) {
+        incomes.add(new Income(amount, source));
+        totalIncome += amount;
+        System.out.println("Income added: " + "$" + Bold + Blue + amount + Reset + " from " + Bold + Blue + source + Reset);
+    }
+
+    public void addGoal(double amount, String date) {
+        goals.add(new Goal(amount, date));
+        System.out.println("Goal added: " + "$" + Bold + Blue + amount + Reset + " by " + Bold + Blue + date + Reset);
+    }
+
+    public void addReminder(String title, String date) {
+        reminders.add(new Reminder(title, date));
+        System.out.println("Reminder added: " + "$" + Bold + Blue + title + Reset + " on " + Bold + Blue + date + Reset);
     }
 
     private void loadData(String filename) {
@@ -66,7 +82,7 @@ public class Budget {
                     String[] parts = line.split(":");
                     double amount = Double.parseDouble(parts[0]);
                     String category = parts[1];
-                    expenses.add(new Expenses(amount, category));
+                    expenses.add(new Expense(amount, category));
                     totalExpense += amount;
                 }
             }
@@ -82,7 +98,7 @@ public class Budget {
             FileWriter writer = new FileWriter(filename);
             writer.write("budget=" + budget);
             writer.write("\n");
-            for (Expenses expense : expenses) {
+            for (Expense expense : expenses) {
                 writer.write(expense.amount + ":" + expense.category);
                 writer.write("\n");
             }
