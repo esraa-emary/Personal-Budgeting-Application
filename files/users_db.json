@@ -1,0 +1,20 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "username": "user1",
+      "email": "user1@example.com",
+      "password": "hashedPassword123",
+      "createdAt": "2023-07-15T10:30:00Z",
+      "lastLogin": "2023-07-16T08:45:00Z"
+    },
+    {
+      "id": "2",
+      "username": "user2",
+      "email": "user2@example.com",
+      "password": "hashedPassword456",
+      "createdAt": "2023-07-14T14:20:00Z",
+      "lastLogin": "2023-07-16T09:15:00Z"
+    }
+  ]
+}

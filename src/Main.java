@@ -2,6 +2,8 @@ import static run.Format.*;
 import static run.Menu.*;
 
 import run.Menu;
+import authentication.*;
+import users.User;
 
 import java.util.Scanner;
 
@@ -13,8 +15,8 @@ public class Main {
             String userName, password, confirmPassword, mail;
             switch (choice) {
                 case 1:
-                    System.out.print("Enter username: ");
-                    userName = external_input.nextLine();
+                    System.out.print("Enter email address: ");
+                    mail = external_input.nextLine();
                     System.out.print("Enter password: ");
                     password = external_input.nextLine();
 
@@ -30,6 +32,8 @@ public class Main {
                     password = external_input.nextLine();
                     System.out.print("Enter confirm password: ");
                     confirmPassword = external_input.nextLine();
+                    User newUser = new User(userName, mail, password);
+                    Signup signup = new Signup(newUser);
 
 
                     break;
