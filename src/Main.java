@@ -1,6 +1,9 @@
 import static run.Format.*;
 import static run.Menu.*;
 
+import Transactions.Transaction;
+import Transactions.TransactionController;
+import Transactions.TransactionService;
 import income.Budget;
 
 import run.Menu;
@@ -13,10 +16,9 @@ public class Main {
     public static void subMenus(String filename) {
         Scanner sub_menu_input = new Scanner(System.in);
         int choice, innerChoice;
-
-//        System.out.println("\nEnter the name of the file to create with the proper extension: ");
         Budget bt = new Budget(filename);
-
+        TransactionService ts = new TransactionService();
+        TransactionController tc = new TransactionController(ts);
         choice = Menu.displayMainMenuSections();
         while (choice != 3) {
             switch (choice) {
@@ -31,9 +33,9 @@ public class Main {
 
                 case 2:
                     innerChoice = Menu.displayMainMenuPayment();
-                    while (innerChoice != 5) {
+                    while (innerChoice != 7) {
                         System.out.print("\n");
-                        optionsPayment(innerChoice, bt, filename, sub_menu_input);
+                        optionsPayment(innerChoice, bt, filename, sub_menu_input, tc);
                         innerChoice = Menu.displayMainMenuPayment();
                     }
                     break;
@@ -62,7 +64,7 @@ public class Main {
                     mail = external_input.nextLine();
                     System.out.print("Enter password: ");
                     password = external_input.nextLine();
-                    User user = new User(mail,password);
+                    User user = new User(mail, password);
                     Login login = new Login(user);
                     subMenus(login.getLoggedInUserFilename());
                     break;

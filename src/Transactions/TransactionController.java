@@ -7,6 +7,8 @@ import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
+import static run.Format.*;
+
 public class TransactionController {
     private TransactionService transactionService;
     private Scanner scanner;
@@ -18,12 +20,13 @@ public class TransactionController {
 
     public void showRecurringTransactionMenu() {
         while (true) {
-            System.out.println("\n=== Recurring Transactions ===");
-            System.out.println("1 -> Add Recurring Transaction");
-            System.out.println("2 -> View Active Recurring Transactions");
-            System.out.println("3 -> Cancel Recurring Transaction");
-            System.out.println("4 -> Back to Main Menu");
-            System.out.print("Choose an option: ");
+            System.out.println(Bold + Cyan + "\n<------- Recurring Transactions Department\n" + Reset);
+            System.out.println(Bold + "Please choose an option from the menu below: \n" + Reset);
+            System.out.println(Bold + "1 -> Add Recurring Transaction" + Reset);
+            System.out.println(Bold + "2 -> View Active Recurring Transactions" + Reset);
+            System.out.println(Bold + "3 -> Cancel Recurring Transaction" + Reset);
+            System.out.println(Bold + Red + "4 -> Back." + Reset);
+            System.out.print(Bold + "Choose an option: " + Reset);
 
             int choice = scanner.nextInt();
             scanner.nextLine();
@@ -66,7 +69,7 @@ public class TransactionController {
         System.out.print("Category: ");
         String category = scanner.nextLine();
 
-        System.out.println("Transaction Type:");
+        System.out.println("\nTransaction Type:");
         System.out.println("1 -> Income");
         System.out.println("2 -> Expense");
         System.out.print("Choose type: ");
@@ -84,7 +87,7 @@ public class TransactionController {
             scanner.nextLine();
         }
 
-        System.out.print("Start date (YYYY-MM-DD): ");
+        System.out.print("\nStart date (YYYY-MM-DD): ");
         LocalDate startDate;
         try {
             startDate = LocalDate.parse(scanner.nextLine(), DateTimeFormatter.ISO_LOCAL_DATE);
@@ -93,7 +96,7 @@ public class TransactionController {
             return;
         }
 
-        System.out.println("Frequency:");
+        System.out.println("\nFrequency:");
         System.out.println("1 -> Daily");
         System.out.println("2 -> Weekly");
         System.out.println("3 -> Monthly");

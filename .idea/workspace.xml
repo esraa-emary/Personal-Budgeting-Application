@@ -5,8 +5,38 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d8d78022-7fa9-4c6b-8988-1f198cfd9836" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/payment/Debt.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/payment/Donate.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/Homebudget.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/Marwan.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/Marwanbudget.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/MohamedBudget.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/fcaiexpenses.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/trial.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/users_db.json" beforeDir="false" afterPath="$PROJECT_DIR$/files/users_db.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Personal-Budgeting-Application/Main.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Personal-Budgeting-Application/authentication/Login.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Personal-Budgeting-Application/authentication/Signup$UserDatabase.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Personal-Budgeting-Application/authentication/Signup$UserEntry.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Personal-Budgeting-Application/authentication/Signup.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Personal-Budgeting-Application/income/Budget.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Personal-Budgeting-Application/income/Expense.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Personal-Budgeting-Application/income/Goal.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Personal-Budgeting-Application/income/Income.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Personal-Budgeting-Application/income/Reminder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Personal-Budgeting-Application/run/Format.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Personal-Budgeting-Application/run/Greet.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Personal-Budgeting-Application/run/Menu.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Personal-Budgeting-Application/users/Admin.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Personal-Budgeting-Application/users/User.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Transactions/TransactionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Transactions/TransactionController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/authentication/Login.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/authentication/Login.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/authentication/Signup.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/authentication/Signup.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dataStorage/userEntry.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dataStorage/userEntry.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/income/Budget.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/income/Budget.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/run/Menu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/run/Menu.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,12 +59,12 @@
     &quot;assignee&quot;: &quot;TheDestro22&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/esraa-emary/Personal-Budgeting-Application.git",
-    "accountId": "5401dda2-12a4-4129-93e4-cb28b472eb0a"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/esraa-emary/Personal-Budgeting-Application.git&quot;,
+    &quot;accountId&quot;: &quot;5401dda2-12a4-4129-93e4-cb28b472eb0a&quot;
   }
-}]]></component>
+}</component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
   &quot;associatedIndex&quot;: 3
@@ -44,25 +74,33 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.Main.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "dart.analysis.tool.window.visible": "false",
-    "git-widget-placeholder": "main",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/Esoooo/Downloads/PersonalBudgetingApp/PersonalBudgetingApp",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Esoooo/Downloads/PersonalBudgetingApp/PersonalBudgetingApp&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-125ca727e0f0-intellij.indexing.shared.core-IU-243.24978.46" />
+        <option value="bundled-js-predefined-d6986cc7102b-76f8388c3a79-JavaScript-IU-243.24978.46" />
+      </set>
+    </attachedChunks>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -74,6 +112,7 @@
       <workItem from="1746863638150" duration="2428000" />
       <workItem from="1746866095548" duration="14308000" />
       <workItem from="1746886949448" duration="11468000" />
+      <workItem from="1746924617051" duration="15429000" />
     </task>
     <servers />
   </component>
@@ -89,7 +128,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/authentication/Signup.java</url>
-          <line>32</line>
+          <line>28</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
       </breakpoints>
