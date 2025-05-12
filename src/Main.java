@@ -81,11 +81,6 @@ public class Main {
                     }
                     break;
 
-                case 3:
-                    System.out.println(Purple + Bold + "THANKS FOR USING OUR APPLICATION!" + Reset);
-                    isMain = false;
-                    break;
-
                 default:
                     System.out.println(Red + Bold + "Invalid option, please try again\n" + Reset);
                     break;
@@ -119,9 +114,9 @@ public class Main {
      */
 
     public static void main(String[] args) {
-        while (isMain) {
-            int choice = Menu.displayMainMenuAuthentication();
-            Scanner external_input = new Scanner(System.in);
+        int choice = Menu.displayMainMenuAuthentication();
+        Scanner external_input = new Scanner(System.in);
+        while (choice != 3) {
             String userName, password, confirmPassword, mail;
             switch (choice) {
                 case 1:
@@ -177,22 +172,19 @@ public class Main {
                         }
                     }
 
-                    while (!isValidPassword(password)) {
-                    }
                     User newUser = new User(userName, mail, password);
                     Signup signup = new Signup(newUser);
                     subMenus(signup.login.getLoggedInUserFilename());
                     break;
 
-                case 3:
-                    System.out.println(Purple + Bold + "THANKS FOR USING OUR APPLICATION!" + Reset);
-                    isMain = false;
-                    break;
-
                 default:
-                    System.out.println(Red + Bold + "Invalid option, please try again\n" + Reset);
+                    System.out.println(Red + Bold + "\nInvalid option, please try again\n" + Reset);
                     break;
             }
+            choice = Menu.displayMainMenuAuthentication();
         }
+        external_input.close();
+        System.out.print(Purple + Bold + "\nTHANKS FOR USING OUR APPLICATION!" + Reset);
+        System.exit(0);
     }
 }

@@ -74,7 +74,22 @@ public class Validation {
      * @param createdAt The creation date string to validate
      * @return true if the creation date is valid, false otherwise
      */
-    public static boolean isValidCreatedAt(String createdAt) {
-        return Pattern.matches(createdAt, createdAt);
+
+    private static final String NUMBER_REGEX = "^[0-9]*$";
+
+    public static boolean isValidNumber(String number) {
+        return Pattern.matches(NUMBER_REGEX, number);
+    }
+
+    private static final String AMOUNT_REGEX = "^\\d+\\.\\d+|\\d+\\.?\\d*$";
+
+    public static boolean isValidAmount(String amount) {
+        return Pattern.matches(AMOUNT_REGEX, amount);
+    }
+
+    private static final String DATE_REGEX = "^(?:(?!0000)[0-9]{4}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|[12][0-9]|3[01])|(?:0[13-9]|1[0-2])-30|(?:0[13578]|1[02])-31))$";
+
+    public static boolean isValidDate(String date) {
+        return Pattern.matches(DATE_REGEX, date);
     }
 }

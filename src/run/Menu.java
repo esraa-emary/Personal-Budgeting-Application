@@ -1,10 +1,9 @@
 package run;
 
+import static authentication.Validation.*;
 import static run.Format.*;
 
-import Transactions.Transaction;
 import Transactions.TransactionController;
-import Transactions.TransactionService;
 import income.Budget;
 import income.Income;
 import income.Expense;
@@ -14,16 +13,40 @@ import payment.Debt;
 import payment.Donate;
 
 import java.util.Scanner;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Iterator;
 
 public class Menu {
     public static boolean isContinue = true;
     public static boolean isMain = true;
     public static Scanner input = new Scanner(System.in);
+
+    public static int checkValidity() {
+        String checkNumber = input.next();
+        while (!isValidNumber(checkNumber)) {
+            System.out.println(Red + Bold + "\nInvalid input, please try again" + Reset);
+            System.out.printf(Bold + "choose an option: " + Reset);
+            checkNumber = input.next();
+        }
+        return Integer.parseInt(checkNumber);
+    }
+
+    public static int checkAmount() {
+        String amount = input.next();
+        while (!isValidAmount(amount)) {
+            System.out.println(Red + Bold + "\nInvalid input, please try again" + Reset);
+            amount = input.next();
+        }
+        return Integer.parseInt(amount);
+    }
+
+    public static String checkDate() {
+        String date = input.next();
+        while (!isValidDate(date)) {
+            System.out.println(Red + Bold + "\nInvalid input, please try again" + Reset);
+            date = input.next();
+        }
+        return date;
+    }
 
     public static int displayMainMenuAuthentication() {
         System.out.println(Bold + Cyan + "<------- Welcome To our Personal Budgeting Application ------->\n" + Reset);
@@ -32,9 +55,7 @@ public class Menu {
         System.out.println(Bold + "2 -> Sign-Up." + Reset);
         System.out.println(Bold + Red + "3 -> Exit." + Reset);
         System.out.printf(Bold + "choose an option: " + Reset);
-        int choice = input.nextInt();
-        input.nextLine();
-        return choice;
+        return checkValidity();
     }
 
     public static int displayMainMenuSections() {
@@ -44,9 +65,7 @@ public class Menu {
         System.out.println(Bold + "2 -> Payment Section." + Reset);
         System.out.println(Bold + Red + "3 -> Back." + Reset);
         System.out.printf(Bold + "choose an option: " + Reset);
-        int choice = input.nextInt();
-        input.nextLine();
-        return choice;
+        return checkValidity();
     }
 
     public static int displayMainMenuIncome() {
@@ -68,9 +87,7 @@ public class Menu {
 
         System.out.println(Bold + Red + "12 -> Back." + Reset);
         System.out.printf(Bold + "choose an option: " + Reset);
-        int choice = input.nextInt();
-        input.nextLine();
-        return choice;
+        return checkValidity();
     }
 
     public static int displayMainMenuPayment() {
@@ -84,9 +101,7 @@ public class Menu {
         System.out.println(Bold + "6 -> Financial Reports." + Reset);
         System.out.println(Bold + Red + "7 -> Back." + Reset);
         System.out.printf(Bold + "choose an option: " + Reset);
-        int choice = input.nextInt();
-        input.nextLine();
-        return choice;
+        return checkValidity();
     }
 
     public static void optionsIncome(int innerChoice, Budget bt, String fileName, Scanner external_input) {
@@ -99,7 +114,10 @@ public class Menu {
                 while (!case1_valid) {
                     try {
                         System.out.print(Bold + "Please enter your" + Green + " budget" + Reset + Bold + " amount: " + Reset);
-                        double bud_amount2 = input.nextDouble();
+                        double bud_amount2;
+                        do {
+                            bud_amount2 = checkAmount();
+                        } while (bud_amount2 <= 0);
                         bt.setBudget(bud_amount2);
                         bt.saveData(fileName);
                         case1_valid = true;
@@ -116,7 +134,9 @@ public class Menu {
                 while (!case2_valid) {
                     try {
                         System.out.print("How much did you pay: ");
-                        am = external_input.nextDouble();
+                        do {
+                            am = checkAmount();
+                        } while (am <= 0);
                         case2_valid = true;
                     } catch (Exception e) {
                         System.out.println(Bold + Red + "Invalid input, please try again" + Reset);
@@ -133,7 +153,9 @@ public class Menu {
                 System.out.print("Enter Source of income: ");
                 source = external_input.next();
                 System.out.print("How much is the amount of income: ");
-                amount = external_input.nextDouble();
+                do {
+                    amount = checkAmount();
+                } while (amount <= 0);
 
                 bt.addIncome(amount, source);
                 bt.saveData(fileName);
@@ -150,9 +172,11 @@ public class Menu {
 
             case 4:
                 System.out.print("Enter date you want as (YYYY-MM-DD): ");
-                date = external_input.next();
+                date = checkDate();
                 System.out.print("How much is the amount of money is your goal by then: ");
-                amount = external_input.nextDouble();
+                do {
+                    amount = checkAmount();
+                } while (amount <= 0);
 
                 bt.addGoal(amount, date);
                 bt.saveData(fileName);
@@ -160,7 +184,7 @@ public class Menu {
 
             case 5:
                 System.out.print("Enter date you want as (YYYY-MM-DD): ");
-                date = external_input.next();
+                date = checkDate();
                 System.out.print("What is the title of this reminder: ");
                 title = external_input.next();
 
@@ -222,12 +246,6 @@ public class Menu {
                 bt.sendReminder(bt, external_input);
                 break;
 
-            case 12:
-                isContinue = false;
-                isMain = false;
-                System.out.println(Purple + Bold + "Now I guess it's time to save some bytes, just like we save some" + Green + " cash" + Reset + Bold + Purple + ". Goodbye!" + Reset);
-                break;
-
             default:
                 System.out.println("Invalid option. Please choose a number between 1 and 8.");
                 break;
@@ -247,7 +265,9 @@ public class Menu {
                 System.out.print("Enter source of debt: ");
                 source = external_input.next();
                 System.out.print("How much is the amount of debt: ");
-                amount = external_input.nextDouble();
+                do {
+                    amount = checkAmount();
+                } while (amount <= 0);
 
                 bt.addDebt(amount, source);
                 bt.saveData(fileName);
@@ -257,7 +277,9 @@ public class Menu {
                 System.out.print("Enter source to donate: ");
                 source = external_input.next();
                 System.out.print("How much is the amount of money: ");
-                amount = external_input.nextDouble();
+                do {
+                    amount = checkAmount();
+                } while (amount <= 0);
 
                 bt.addDonate(amount, source);
                 bt.saveData(fileName);
@@ -302,12 +324,6 @@ public class Menu {
 //                    System.out.println(Bold + counter + "- " + Red + i.amount + "$" + Reset + " from " + Bold + Blue + i.source + Reset);
 //                    counter++;
 //                }
-                break;
-
-            case 7:
-                isContinue = false;
-                isMain = false;
-                System.out.println(Purple + Bold + "Now I guess it's time to save some bytes, just like we save some" + Green + " cash" + Reset + Bold + Purple + ". Goodbye!" + Reset);
                 break;
 
             default:
