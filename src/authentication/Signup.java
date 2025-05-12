@@ -6,7 +6,6 @@ import com.google.gson.GsonBuilder;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,12 +33,32 @@ import dataStorage.*;
  * @see dataStorage.userDatabase
  * @see dataStorage.userEntry
  */
-
 public class Signup {
+    /**
+     * Path to the JSON file storing user credentials and information
+     */
     private static final String USERS_DB_FILE_PATH = "files/users_db.json";
+
+    /**
+     * The user object containing registration information
+     */
     User user;
+
+    /**
+     * Login instance created after successful registration
+     */
     public Login login;
 
+    /**
+     * Creates a signup instance and registers the provided user.
+     * <p>
+     * The constructor automatically registers the user in the database
+     * and creates a login session for the newly registered user.
+     *
+     * @param user A User object containing registration information (username, email, password)
+     * @see users.User
+     * @see Login
+     */
     public Signup(User user) {
         this.user = user;
         registerUser();
@@ -60,7 +79,6 @@ public class Signup {
      * <p>
      * The user's data file identifier is created based on username and unique ID.
      */
-
     private void registerUser() {
         try {
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
@@ -94,7 +112,6 @@ public class Signup {
 
             System.out.println("User resgistered successfully!");
         } catch (Exception e) {
-
             System.err.println("Error registering user: " + e.getMessage());
         }
     }
@@ -108,11 +125,9 @@ public class Signup {
      * @param users The list of existing user entries in the database
      * @return A string representation of the new unique ID
      */
-
     private String generateUniqueID(List<userEntry> users) {
         int max_id = 0;
         for (userEntry user : users) {
-
             try {
                 int id = Integer.parseInt(user.id);
                 if (id > max_id) {
@@ -124,9 +139,14 @@ public class Signup {
         return String.valueOf(max_id + 1);
     }
 
+    /**
+     * Gets the current system time as a string.
+     * <p>
+     * Used for recording registration and login timestamps in the user database.
+     *
+     * @return The current time as an ISO string
+     */
     private String getCurrentTime() {
-
         return java.time.OffsetTime.now().toString();
     }
 }
-

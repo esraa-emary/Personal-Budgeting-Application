@@ -19,40 +19,150 @@ import dataStorage.*;
 import payment.Debt;
 import payment.Donate;
 
+/**
+ * Manages a user's personal budget, expenses, incomes, and financial goals.
+ * <p>
+ * This class provides comprehensive budget management functionality including:
+ * <ul>
+ *   <li>Budget setting and tracking</li>
+ *   <li>Expense management with category tracking</li>
+ *   <li>Income tracking with source information</li>
+ *   <li>Financial goal setting with target dates</li>
+ *   <li>Reminders with email notification capability</li>
+ *   <li>Donation tracking</li>
+ *   <li>Debt tracking</li>
+ *   <li>Data persistence through file storage</li>
+ * </ul>
+ * <p>
+ * Budget constraints are enforced when adding new expenses, ensuring users
+ * cannot exceed their set budget limits.
+ *
+ * @author Budget Application Team
+ * @version 1.0
+ * @see income.Expense
+ * @see income.Income
+ * @see income.Goal
+ * @see income.Reminder
+ * @see payment.Debt
+ * @see payment.Donate
+ */
 public class Budget {
+    /**
+     * The total budget amount set by the user
+     */
     public double budget;
+
+    /**
+     * Collection of user's expenses with categories
+     */
     public ArrayList<Expense> expenses = new ArrayList<>();
+
+    /**
+     * Sum of all expenses
+     */
     public double totalExpense = 0;
+
+    /**
+     * Collection of user's income sources
+     */
     public ArrayList<Income> incomes = new ArrayList<>();
+
+    /**
+     * Sum of all income
+     */
     public double totalIncome = 0;
+
+    /**
+     * Collection of user's financial goals
+     */
     public ArrayList<Goal> goals = new ArrayList<>();
+
+    /**
+     * Collection of user's reminders
+     */
     public ArrayList<Reminder> reminders = new ArrayList<>();
 
+    /**
+     * Collection of user's donations
+     */
     public ArrayList<Donate> donates = new ArrayList<>();
+
+    /**
+     * Sum of all donations
+     */
     public double totalDonates = 0;
 
+    /**
+     * Collection of user's debts
+     */
     public ArrayList<Debt> debts = new ArrayList<>();
+
+    /**
+     * Sum of all debts
+     */
     public double totalDebts = 0;
 
+    /**
+     * Path to the JSON file storing user data
+     */
     private static final String USERS_DB_FILE_PATH = "files/users_db.json";
-    private String mailReminder = "", usernameReminder = "";
 
+    /**
+     * Email address for reminder notifications
+     */
+    private String mailReminder = "";
+
+    /**
+     * Username for reminder notifications
+     */
+    private String usernameReminder = "";
+
+    /**
+     * Creates a new budget with the specified initial amount.
+     *
+     * @param budget The starting budget amount
+     */
     public Budget(double budget) {
         this.budget = budget;
     }
 
+    /**
+     * Creates a budget and loads existing data from the specified file.
+     *
+     * @param filename The name of the file to load budget data from
+     * @see #loadData(String)
+     */
     public Budget(String filename) {
         loadData(filename);
     }
 
+    /**
+     * Sets the budget to a new amount.
+     *
+     * @param budget The new budget amount
+     */
     public void setBudget(double budget) {
         this.budget = budget;
     }
 
+    /**
+     * Retrieves the current budget amount.
+     *
+     * @return The current budget amount
+     */
     public double getBudget() {
         return budget;
     }
 
+    /**
+     * Adds a new expense if it doesn't exceed the budget.
+     * <p>
+     * If adding this expense would cause the total expenses to exceed
+     * the budget, the addition is rejected with a warning message.
+     *
+     * @param amount   The expense amount
+     * @param category The category of the expense
+     */
     public void addExpense(double amount, String category) {
         if (totalExpense + amount > budget) {
             System.out.println("Exceeded budget, you cannot add this expense!");
@@ -63,22 +173,49 @@ public class Budget {
         }
     }
 
+    /**
+     * Adds a new income source to the budget.
+     *
+     * @param amount The income amount
+     * @param source The source of the income
+     */
     public void addIncome(double amount, String source) {
         incomes.add(new Income(amount, source));
         totalIncome += amount;
         System.out.println("Income added: " + "$" + Bold + Blue + amount + Reset + " from " + Bold + Blue + source + Reset);
     }
 
+    /**
+     * Adds a new financial goal with target amount and date.
+     *
+     * @param amount The target amount for the goal
+     * @param date   The target date to achieve the goal
+     */
     public void addGoal(double amount, String date) {
         goals.add(new Goal(amount, date));
         System.out.println("Goal added: " + "$" + Bold + Blue + amount + Reset + " by " + Bold + Blue + date + Reset);
     }
 
+    /**
+     * Adds a new reminder with title and date.
+     *
+     * @param title The title/description of the reminder
+     * @param date  The date for the reminder
+     */
     public void addReminder(String title, String date) {
         reminders.add(new Reminder(title, date));
         System.out.println("Reminder added: " + "$" + Bold + Blue + title + Reset + " on " + Bold + Blue + date + Reset);
     }
 
+    /**
+     * Adds a new donation if it doesn't exceed the budget.
+     * <p>
+     * If adding this donation would cause the total donations to exceed
+     * the budget, the addition is rejected with a warning message.
+     *
+     * @param amount The donation amount
+     * @param source The recipient of the donation
+     */
     public void addDonate(double amount, String source) {
         if (totalDonates + amount > budget) {
             System.out.println("Exceeded budget, you cannot add this donate!");
@@ -89,6 +226,15 @@ public class Budget {
         }
     }
 
+    /**
+     * Adds a new debt repayment if it doesn't exceed the budget.
+     * <p>
+     * If adding this debt would cause the total debts to exceed
+     * the budget, the addition is rejected with a warning message.
+     *
+     * @param amount The debt repayment amount
+     * @param source The creditor of the debt
+     */
     public void addDebt(double amount, String source) {
         if (totalDebts + amount > budget) {
             System.out.println("Exceeded budget, you cannot repayment this debt!");
@@ -99,6 +245,19 @@ public class Budget {
         }
     }
 
+    /**
+     * Sends an email reminder for a specific date.
+     * <p>
+     * This method:
+     * <ol>
+     *   <li>Retrieves the current user's email and username from the database</li>
+     *   <li>Searches for reminders matching the specified date</li>
+     *   <li>Uses the Mailjet API to send an email reminder</li>
+     * </ol>
+     *
+     * @param bt             The budget object containing reminders
+     * @param external_input Scanner for user input to specify the reminder date
+     */
     public void sendReminder(Budget bt, Scanner external_input) {
         try {
             File file = new File(USERS_DB_FILE_PATH);
@@ -194,6 +353,14 @@ public class Budget {
         }
     }
 
+    /**
+     * Loads budget data from a file.
+     * <p>
+     * This method reads budget amount and expenses from a file in the
+     * "files" directory. If the file doesn't exist, it creates a new one.
+     *
+     * @param filename The name of the file to load (without path or extension)
+     */
     private void loadData(String filename) {
         File bAndE = new File("./files/" + filename + ".txt");
         try {
@@ -230,6 +397,13 @@ public class Budget {
         }
     }
 
+    /**
+     * Saves the current budget data to a file.
+     * <p>
+     * This method writes the budget amount and all expenses to the specified file.
+     *
+     * @param filename The full path of the file to save the data to
+     */
     public void saveData(String filename) {
         File bAndE = new File(filename);
         try {
