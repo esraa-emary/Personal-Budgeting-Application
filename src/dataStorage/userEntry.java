@@ -9,4 +9,5 @@ public class userEntry {
     public String password;
     public String createdAt;
     public String lastLogin;
+    public boolean current;
 }

@@ -1,3 +1,0 @@
-budget=2000.0
-500.0:transportation
-600.0:food

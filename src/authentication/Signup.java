@@ -13,7 +13,6 @@ import java.util.List;
 import users.User;
 import dataStorage.*;
 
-
 public class Signup {
     private static final String USERS_DB_FILE_PATH = "files/users_db.json";
     User user;
@@ -25,11 +24,8 @@ public class Signup {
         login = new Login(user);
     }
 
-
     private void registerUser() {
-
         try {
-
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
             File file = new File(USERS_DB_FILE_PATH);
             dataStorage.userDatabase database;
@@ -44,13 +40,14 @@ public class Signup {
             }
 
             userEntry entry = new userEntry();
-            entry.id  = generateUniqueID(database.users);
-            entry.filename = user.getusername().replace(" ","") + entry.id + ".txt";
+            entry.id = generateUniqueID(database.users);
+            entry.filename = user.getusername().replace(" ", "") + entry.id + ".txt";
             entry.username = user.getusername();
             entry.email = user.getEmail();
             entry.password = user.getPassword();
             entry.createdAt = getCurrentTime();
             entry.lastLogin = getCurrentTime();
+            entry.current = true;
 
             database.users.add(entry);
 
@@ -59,15 +56,13 @@ public class Signup {
             writer.close();
 
             System.out.println("User resgistered successfully!");
-        } catch (Exception e){
+        } catch (Exception e) {
 
             System.err.println("Error registering user: " + e.getMessage());
         }
-
     }
 
     private String generateUniqueID(List<userEntry> users) {
-
         int max_id = 0;
         for (userEntry user : users) {
 

@@ -22,16 +22,13 @@ public class Login {
     private userEntry loggedInUser = null;
 
     public Login(User user) {
-
         this.mail = user.getEmail();
         this.password = user.getPassword();
         this.isLoggedIn = authenticateUser();
     }
 
     private boolean authenticateUser() {
-
         try {
-
             File file = new File(USERS_DB_FILE_PATH);
             if (!file.exists()) {
                 System.out.println("No user database found, please register first");
@@ -43,21 +40,23 @@ public class Login {
             userDatabase database = gson.fromJson(reader, userDatabase.class);
             reader.close();
 
+            boolean found = false;
             for (userEntry user : database.users) {
-
                 if (user.email.equals(this.mail) && user.password.equals(this.password)) {
-
                     user.lastLogin = getCurrentTime();
+                    user.current = true;
                     this.loggedInUser = user;
+                    found = true;
 
-                    FileWriter writer = new FileWriter(file);
-                    gson.toJson(database, writer);
-                    writer.close();
-
-                    System.out.println("Login successful: Welcome Back" + user.username);
-                    return true;
+                    System.out.println("\nLogin successful: Welcome Back " + user.username);
                 }
+                else user.current = false;
+
+                FileWriter writer = new FileWriter(file);
+                gson.toJson(database, writer);
+                writer.close();
             }
+            if (found) return true;
             System.out.println("Invalid email or password, please try again or sign up first if you don't have an account");
             return false;
         } catch (Exception e) {
@@ -77,17 +76,13 @@ public class Login {
         return new User(loggedInUser.username, loggedInUser.password, loggedInUser.email);
     }
 
-    public String getLoggedInUserFilename(){
-
+    public String getLoggedInUserFilename() {
         return loggedInUser != null ? loggedInUser.filename : null;
     }
 
     private String getCurrentTime() {
-
         return java.time.OffsetTime.now().toString();
     }
-
-
 }
 
 

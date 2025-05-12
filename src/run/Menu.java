@@ -2,11 +2,16 @@ package run;
 
 import static run.Format.*;
 
+import Transactions.Transaction;
+import Transactions.TransactionController;
+import Transactions.TransactionService;
 import income.Budget;
 import income.Income;
 import income.Expense;
 import income.Goal;
 import income.Reminder;
+import payment.Debt;
+import payment.Donate;
 
 import java.util.Scanner;
 import java.io.BufferedReader;
@@ -71,11 +76,13 @@ public class Menu {
     public static int displayMainMenuPayment() {
         System.out.println(Bold + Cyan + "\n<------- Welcome To Payment Section\n" + Reset);
         System.out.println(Bold + "Please choose an option from the menu below: \n" + Reset);
-        System.out.println(Bold + "1 -> Display Transactions." + Reset);
-        System.out.println(Bold + "2 -> Debt Repayment." + Reset);
+        System.out.println(Bold + "1 -> Transactions Department." + Reset);
+        System.out.println(Bold + "2 -> Add Debt Repayment." + Reset);
         System.out.println(Bold + "3 -> Add Donate." + Reset);
-        System.out.println(Bold + "4 -> Financial Reports." + Reset);
-        System.out.println(Bold + Red + "5 -> Back." + Reset);
+        System.out.println(Bold + "4 -> Display Debts Repayment." + Reset);
+        System.out.println(Bold + "5 -> Display Donates." + Reset);
+        System.out.println(Bold + "6 -> Financial Reports." + Reset);
+        System.out.println(Bold + Red + "7 -> Back." + Reset);
         System.out.printf(Bold + "choose an option: " + Reset);
         int choice = input.nextInt();
         input.nextLine();
@@ -85,6 +92,7 @@ public class Menu {
     public static void optionsIncome(int innerChoice, Budget bt, String fileName, Scanner external_input) {
         String source, date, title;
         double amount;
+        int counter;
         switch (innerChoice) {
             case 1:
                 boolean case1_valid = false;
@@ -161,14 +169,17 @@ public class Menu {
                 break;
 
             case 6:
-                System.out.println("Your still have from you budget: " + Bold + Green + (bt.getBudget() - bt.totalExpense) + "$" + Reset);
+                System.out.println("Your still have from you budget: " + Bold + Green + (bt.getBudget() - bt.totalExpense - bt.totalDonates - bt.totalDebts) + "$" + Reset);
+                System.out.println("For expenses: " + Bold + Green + (bt.totalExpense) + "$" + Reset);
+                System.out.println("For donates: " + Bold + Green + (bt.totalDonates) + "$" + Reset);
+                System.out.println("For debts: " + Bold + Green + (bt.totalDebts) + "$" + Reset);
                 System.out.println("You still have from you income: " + Bold + Green + (bt.totalIncome - bt.totalExpense) + "$" + Reset);
                 break;
 
             case 7:
                 System.out.println("Your" + Bold + Red + " Expenses" + Reset + Bold + " are:" + Reset);
 
-                int counter = 1;
+                counter = 1;
                 for (Expense e : bt.expenses) {
                     System.out.println(Bold + counter + "- " + Red + e.amount + "$" + Reset + " for " + Bold + Blue + e.category + Reset);
                     counter++;
@@ -208,71 +219,7 @@ public class Menu {
                 break;
 
             case 11:
-                System.out.print("Enter date to send reminder as (YYYY-MM-DD): ");
-                date = external_input.next();
-
-                boolean found = false;
-                for (int remind = 0; remind < bt.reminders.size(); remind++) {
-                    if (bt.reminders.get(remind).date.equals(date)) {
-                        found = true;
-
-                        String client_name = "ggggggggg";
-                        String api_key_public = "998d404401aaaca06cea222204ee2179";
-                        String api_key_private = "bae1a8be1b381bf1b52f31ea2e207d30";
-                        String to_email = "esraaemary33@gmail.com";
-                        String from_email = "assignmentsoftware16@gmail.com";
-                        String subject = "Reminder for " + bt.reminders.get(remind).title + " on " + date;
-                        String message_body = "Dear " + client_name + ", Your reminder is on " + date +
-                                " for " + bt.reminders.get(remind).title;
-
-                        String json_payload = String.format(
-                                "{\"Messages\":[{\"From\":{\"Email\":\"%s\",\"Name\":\"Software Assignments\"},\"To\":[{\"Email\":\"%s\",\"Name\":\"%s\"}],\"Subject\":\"%s\",\"TextPart\":\"%s\"}]}",
-                                from_email, to_email, to_email, subject, message_body
-                        );
-
-// Escape the JSON for command line
-                        json_payload = json_payload.replace("\"", "\\\"");
-
-                        List<String> command = new ArrayList<>();
-                        command.add("curl");
-                        command.add("-X");
-                        command.add("POST");
-                        command.add("https://api.mailjet.com/v3.1/send");
-                        command.add("-H");
-                        command.add("Content-Type: application/json");
-                        command.add("-u");
-                        command.add(api_key_public + ":" + api_key_private);
-                        command.add("-d");
-                        command.add(json_payload);  // Now properly escaped
-
-                        System.out.println("\nSending reminder to " + to_email + "...");
-
-                        try {
-                            ProcessBuilder processBuilder = new ProcessBuilder(command);
-                            processBuilder.redirectErrorStream(true);
-                            Process process = processBuilder.start();
-
-                            BufferedReader reader = new BufferedReader(
-                                    new InputStreamReader(process.getInputStream())
-                            );
-
-                            String line;
-                            System.out.println("Mailjet response:");
-                            while ((line = reader.readLine()) != null) {
-                                System.out.println(line);
-                            }
-
-                            int exitCode = process.waitFor();
-                            System.out.println("Exited with code: " + exitCode);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-
-                if (!found) {
-                    System.out.println("There is no reminders.");
-                }
+                bt.sendReminder(bt, external_input);
                 break;
 
             case 12:
@@ -287,24 +234,77 @@ public class Menu {
         }
     }
 
-    public static void optionsPayment(int innerChoice, Budget bt, String fileName, Scanner external_input) {
+    public static void optionsPayment(int innerChoice, Budget bt, String fileName, Scanner external_input, TransactionController tc) {
+        String source;
+        double amount;
+        int counter;
         switch (innerChoice) {
             case 1:
+                tc.showRecurringTransactionMenu();
                 break;
 
             case 2:
+                System.out.print("Enter source of debt: ");
+                source = external_input.next();
+                System.out.print("How much is the amount of debt: ");
+                amount = external_input.nextDouble();
+
+                bt.addDebt(amount, source);
+                bt.saveData(fileName);
                 break;
 
             case 3:
+                System.out.print("Enter source to donate: ");
+                source = external_input.next();
+                System.out.print("How much is the amount of money: ");
+                amount = external_input.nextDouble();
+
+                bt.addDonate(amount, source);
+                bt.saveData(fileName);
                 break;
 
             case 4:
+                System.out.println("Your" + Bold + Red + " Debts" + Reset + Bold + " are:" + Reset);
+
+                counter = 1;
+                for (Debt r : bt.debts) {
+                    System.out.println(Bold + counter + "- debt for " + Red + r.source + Reset + " with " + Bold + Blue + r.amount + "$" + Reset);
+                    counter++;
+                }
                 break;
 
             case 5:
+                System.out.println("Your" + Bold + Red + " Donates" + Reset + Bold + " are:" + Reset);
+
+                counter = 1;
+                for (Donate r : bt.donates) {
+                    System.out.println(Bold + counter + "- donate to " + Red + r.source + Reset + " by " + Bold + Blue + r.amount + "$" + Reset);
+                    counter++;
+                }
                 break;
 
             case 6:
+                // income
+                System.out.println("Your total income is: " + Bold + Green + (bt.totalIncome) + "$\n" + Reset + "Which comes from:");
+                counter = 1;
+                for (Income i : bt.incomes) {
+                    System.out.println(Bold + counter + "- " + Red + i.amount + "$" + Reset + " from " + Bold + Blue + i.source + Reset);
+                    counter++;
+                }
+
+                // budget
+                System.out.println("Your budget is: " + Bold + Green + (bt.budget) + "$\n" + Reset);
+
+                // transaction
+                System.out.println("Your transactions come from:");
+                counter = 1;
+//                for (Transaction t : tc.) {
+//                    System.out.println(Bold + counter + "- " + Red + i.amount + "$" + Reset + " from " + Bold + Blue + i.source + Reset);
+//                    counter++;
+//                }
+                break;
+
+            case 7:
                 isContinue = false;
                 isMain = false;
                 System.out.println(Purple + Bold + "Now I guess it's time to save some bytes, just like we save some" + Green + " cash" + Reset + Bold + Purple + ". Goodbye!" + Reset);
