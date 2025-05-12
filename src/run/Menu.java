@@ -15,11 +15,54 @@ import payment.Donate;
 import java.util.Scanner;
 import java.util.Iterator;
 
+/**
+ * Provides the user interface and navigation system for the Personal Budgeting Application.
+ * <p>
+ * This class manages:
+ * <ul>
+ *   <li>Application menus and navigation between different sections</li>
+ *   <li>User input validation for numbers, amounts, and dates</li>
+ *   <li>Processing user selections for different application features</li>
+ *   <li>Displaying formatted output for various financial data</li>
+ * </ul>
+ * <p>
+ * The menu system is organized hierarchically with:
+ * <ul>
+ *   <li>Authentication menu (login/signup)</li>
+ *   <li>Main sections menu (income/payment)</li>
+ *   <li>Feature-specific submenus for each section</li>
+ * </ul>
+ *
+ * @author Budget Application Team
+ * @version 1.0
+ * @see income.Budget
+ * @see Transactions.TransactionController
+ * @see authentication.Validation
+ */
+
 public class Menu {
+    /**
+     * Flag indicating whether the application should continue running
+     */
+
     public static boolean isContinue = true;
+    /**
+     * Flag indicating whether to display the main menu
+     */
     public static boolean isMain = true;
+    /**
+     * Scanner for reading user input throughout the application
+     */
     public static Scanner input = new Scanner(System.in);
 
+    /**
+     * Validates user input as a valid numeric option.
+     * <p>
+     * Continues prompting until the user enters a valid number.
+     *
+     * @return The validated numeric input as an integer
+     * @see authentication.Validation#isValidNumber(String)
+     */
     public static int checkValidity() {
         String checkNumber = input.next();
         while (!isValidNumber(checkNumber)) {
@@ -30,6 +73,15 @@ public class Menu {
         return Integer.parseInt(checkNumber);
     }
 
+    /**
+     * Validates user input as a valid monetary amount.
+     * <p>
+     * Continues prompting until the user enters a valid number.
+     *
+     * @return The validated amount as an integer
+     * @see authentication.Validation#isValidAmount(String)
+     */
+
     public static int checkAmount() {
         String amount = input.next();
         while (!isValidAmount(amount)) {
@@ -39,6 +91,15 @@ public class Menu {
         return Integer.parseInt(amount);
     }
 
+    /**
+     * Validates user input as a valid date in YYYY-MM-DD format.
+     * <p>
+     * Continues prompting until the user enters a valid date.
+     *
+     * @return The validated date as a string in YYYY-MM-DD format
+     * @see authentication.Validation#isValidDate(String)
+     */
+
     public static String checkDate() {
         String date = input.next();
         while (!isValidDate(date)) {
@@ -47,6 +108,14 @@ public class Menu {
         }
         return date;
     }
+
+    /**
+     * Displays the authentication menu with login and signup options.
+     * <p>
+     * This is the entry point menu when the application starts.
+     *
+     * @return The user's selected option (1-3)
+     */
 
     public static int displayMainMenuAuthentication() {
         System.out.println(Bold + Cyan + "<------- Welcome To our Personal Budgeting Application ------->\n" + Reset);
@@ -58,6 +127,15 @@ public class Menu {
         return checkValidity();
     }
 
+    /**
+     * Displays the main section selection menu after authentication.
+     * <p>
+     * Allows users to choose between Income and Payment sections,
+     * or return to the authentication menu.
+     *
+     * @return The user's selected option (1-3)
+     */
+
     public static int displayMainMenuSections() {
         System.out.println(Bold + Cyan + "\n<------- Welcome To our Personal Budgeting Application\n" + Reset);
         System.out.println(Bold + "Please choose an option from the menu below: \n" + Reset);
@@ -67,6 +145,15 @@ public class Menu {
         System.out.printf(Bold + "choose an option: " + Reset);
         return checkValidity();
     }
+
+    /**
+     * Displays the Income section menu with all available options.
+     * <p>
+     * Provides options for adding and viewing different income-related
+     * data such as budget, expenses, income, goals, and reminders.
+     *
+     * @return The user's selected option (1-12)
+     */
 
     public static int displayMainMenuIncome() {
         System.out.println(Bold + Cyan + "\n<------- Welcome To Income Section\n" + Reset);
@@ -90,6 +177,15 @@ public class Menu {
         return checkValidity();
     }
 
+    /**
+     * Displays the Payment section menu with all available options.
+     * <p>
+     * Provides options for managing transactions, debt repayments,
+     * donations, and viewing financial reports.
+     *
+     * @return The user's selected option (1-7)
+     */
+
     public static int displayMainMenuPayment() {
         System.out.println(Bold + Cyan + "\n<------- Welcome To Payment Section\n" + Reset);
         System.out.println(Bold + "Please choose an option from the menu below: \n" + Reset);
@@ -103,6 +199,23 @@ public class Menu {
         System.out.printf(Bold + "choose an option: " + Reset);
         return checkValidity();
     }
+
+    /**
+     * Processes user selections within the Income section.
+     * <p>
+     * Based on the user's choice, this method:
+     * <ul>
+     *   <li>Collects necessary input for the selected operation</li>
+     *   <li>Performs the requested operation on the budget object</li>
+     *   <li>Saves any changes to the data file</li>
+     *   <li>Displays results or status messages</li>
+     * </ul>
+     *
+     * @param innerChoice    The user's selected option from the Income menu
+     * @param bt             The budget object to operate on
+     * @param fileName       The file name for persisting budget data
+     * @param external_input Scanner for reading additional input
+     */
 
     public static void optionsIncome(int innerChoice, Budget bt, String fileName, Scanner external_input) {
         String source, date, title;
@@ -251,6 +364,24 @@ public class Menu {
                 break;
         }
     }
+
+    /**
+     * Processes user selections within the Payment section.
+     * <p>
+     * Based on the user's choice, this method:
+     * <ul>
+     *   <li>Navigates to transaction management if selected</li>
+     *   <li>Collects necessary input for debt repayments or donations</li>
+     *   <li>Displays financial reports and transaction histories</li>
+     *   <li>Saves any changes to the data file</li>
+     * </ul>
+     *
+     * @param innerChoice    The user's selected option from the Payment menu
+     * @param bt             The budget object to operate on
+     * @param fileName       The file name for persisting budget data
+     * @param external_input Scanner for reading additional input
+     * @param tc             The transaction controller for recurring transaction management
+     */
 
     public static void optionsPayment(int innerChoice, Budget bt, String fileName, Scanner external_input, TransactionController tc) {
         String source;

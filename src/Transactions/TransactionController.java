@@ -9,15 +9,58 @@ import java.util.Scanner;
 
 import static run.Format.*;
 
+/**
+ * Controller for managing transaction-related user interactions in the Personal Budgeting Application.
+ * <p>
+ * This class provides the user interface for:
+ * <ul>
+ *   <li>Adding recurring transactions with various frequencies</li>
+ *   <li>Viewing active recurring transactions</li>
+ *   <li>Canceling unwanted recurring transactions</li>
+ * </ul>
+ * <p>
+ * The controller handles user input validation, data formatting, and delegates
+ * business logic to the TransactionService.
+ *
+ * @author Budget Application Team
+ * @version 1.0
+ * @see TransactionService
+ * @see Transaction
+ */
 public class TransactionController {
+    /**
+     * Service for handling transaction business logic
+     */
     private TransactionService transactionService;
+
+    /**
+     * Scanner for reading user input
+     */
     private Scanner scanner;
 
+    /**
+     * Creates a new transaction controller with the specified service.
+     *
+     * @param transactionService The service to use for transaction operations
+     */
     public TransactionController(TransactionService transactionService) {
         this.transactionService = transactionService;
         this.scanner = new Scanner(System.in);
     }
 
+    /**
+     * Displays the main menu for recurring transactions management.
+     * <p>
+     * This method presents options for:
+     * <ul>
+     *   <li>Adding new recurring transactions</li>
+     *   <li>Viewing active recurring transactions</li>
+     *   <li>Canceling existing recurring transactions</li>
+     *   <li>Returning to the previous menu</li>
+     * </ul>
+     * <p>
+     * It handles user input and delegates to appropriate methods based on selection.
+     */
     public void showRecurringTransactionMenu() {
         while (true) {
             System.out.println(Bold + Cyan + "\n<------- Recurring Transactions Department\n" + Reset);
@@ -49,6 +92,18 @@ public class TransactionController {
         }
     }
 
+    /**
+     * Collects user input for creating a new recurring transaction.
+     * <p>
+     * This method guides the user through entering:
+     * <ul>
+     *   <li>Basic transaction details (description, amount, category)</li>
+     *   <li>Transaction type (income or expense)</li>
+     *   <li>Recurrence settings (start date, frequency, optional end date)</li>
+     * </ul>
+     * <p>
+     * Input validation is performed for numerical values and date formats.
+     */
     private void addRecurringTransaction() {
         System.out.println("\nAdd New Recurring Transaction");
 
@@ -155,6 +210,19 @@ public class TransactionController {
         System.out.println("Recurring transaction added successfully!");
     }
 
+    /**
+     * Displays all active recurring transactions.
+     * <p>
+     * This method retrieves active recurring transactions from the service
+     * and presents them in a formatted table showing:
+     * <ul>
+     *   <li>Transaction ID</li>
+     *   <li>Description</li>
+     *   <li>Amount</li>
+     *   <li>Category</li>
+     *   <li>Next occurrence date</li>
+     * </ul>
+     */
     private void viewActiveRecurringTransactions() {
         List<Transaction> activeRecurring = transactionService.getActiveRecurringTransactions();
 
@@ -174,6 +242,17 @@ public class TransactionController {
         }
     }
 
+    /**
+     * Handles the cancellation of a recurring transaction.
+     * <p>
+     * This method:
+     * <ol>
+     *   <li>Displays active recurring transactions</li>
+     *   <li>Prompts for the ID of the transaction to cancel</li>
+     *   <li>Requires password verification for security</li>
+     *   <li>Delegates to the service to perform the cancellation</li>
+     * </ol>
+     */
     private void cancelRecurringTransaction() {
         viewActiveRecurringTransactions();
 
