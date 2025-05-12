@@ -1,34 +1,4 @@
 {
-    "users": [
-        {
-            "id": "1",
-            "filename": "mojs1",
-            "username": "mojs",
-            "email": "lkasj@gmail.com",
-            "password": "123456",
-            "createdAt": "15:20:23.393563300+03:00",
-            "lastLogin": "15:20:23.419542200+03:00",
-            "current": false
-        },
-        {
-            "id": "2",
-            "filename": "esraaemary2",
-            "username": "esraa emary",
-            "email": "esraaemary33@gmail.com",
-            "password": "123456",
-            "createdAt": "16:35:37.799805900+03:00",
-            "lastLogin": "17:05:44.554584200+03:00",
-            "current": false
-        },
-        {
-            "id": "3",
-            "filename": "MohamedEhabSabry3",
-            "username": "Mohamed Ehab Sabry",
-            "email": "messk8@gmail.com",
-            "password": "123456",
-            "createdAt": "17:32:15.598131100+03:00",
-            "lastLogin": "17:32:15.607080600+03:00",
-            "current": true
-        }
-    ]
+  "users": [
+  ]
 }
