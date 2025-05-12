@@ -1,0 +1,200 @@
+Index: src/authentication/Signup.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package authentication;\r\n\r\nimport com.google.gson.Gson;\r\nimport com.google.gson.GsonBuilder;\r\n\r\nimport java.io.File;\r\nimport java.io.FileReader;\r\nimport java.io.FileWriter;\r\nimport java.io.IOException;\r\nimport java.util.ArrayList;\r\nimport java.util.List;\r\n\r\nimport users.User;\r\nimport dataStorage.*;\r\n\r\n\r\npublic class Signup {\r\n    private static final String USERS_DB_FILE_PATH = \"files/users_db.json\";\r\n    User user;\r\n    public Login login;\r\n\r\n    public Signup(User user) {\r\n        this.user = user;\r\n        registerUser();\r\n        login = new Login(user);\r\n    }\r\n\r\n\r\n    private void registerUser() {\r\n\r\n        try {\r\n\r\n            Gson gson = new GsonBuilder().setPrettyPrinting().create();\r\n            File file = new File(USERS_DB_FILE_PATH);\r\n            dataStorage.userDatabase database;\r\n\r\n            if (file.exists()) {\r\n                FileReader reader = new FileReader(file);\r\n                database = gson.fromJson(reader, dataStorage.userDatabase.class);\r\n                reader.close();\r\n            } else {\r\n                database = new dataStorage.userDatabase();\r\n                database.users = new ArrayList<>();\r\n            }\r\n\r\n            userEntry entry = new userEntry();\r\n            entry.id  = generateUniqueID(database.users);\r\n            entry.filename = user.getusername().replace(\" \",\"\") + entry.id + \".txt\";\r\n            entry.username = user.getusername();\r\n            entry.email = user.getEmail();\r\n            entry.password = user.getPassword();\r\n            entry.createdAt = getCurrentTime();\r\n            entry.lastLogin = getCurrentTime();\r\n\r\n            database.users.add(entry);\r\n\r\n            FileWriter writer = new FileWriter(file);\r\n            gson.toJson(database, writer);\r\n            writer.close();\r\n\r\n            System.out.println(\"User resgistered successfully!\");\r\n        } catch (Exception e){\r\n\r\n            System.err.println(\"Error registering user: \" + e.getMessage());\r\n        }\r\n\r\n    }\r\n\r\n    private String generateUniqueID(List<userEntry> users) {\r\n\r\n        int max_id = 0;\r\n        for (userEntry user : users) {\r\n\r\n            try {\r\n                int id = Integer.parseInt(user.id);\r\n                if (id > max_id) {\r\n                    max_id = id;\r\n                }\r\n            } catch (NumberFormatException ignored) {\r\n            }\r\n        }\r\n        return String.valueOf(max_id + 1);\r\n    }\r\n\r\n    private String getCurrentTime() {\r\n\r\n        return java.time.OffsetTime.now().toString();\r\n    }\r\n\r\n//    private static class userEntry {\r\n//\r\n//        String id;\r\n//        String filename;\r\n//        String username;\r\n//        String email;\r\n//        String password;\r\n//        String createdAt;\r\n//        String lastLogin;\r\n//    }\r\n\r\n//    private static class userDatabase {\r\n//\r\n//        List<userEntry> users;\r\n//    }\r\n}\r\n\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/authentication/Signup.java b/src/authentication/Signup.java
+--- a/src/authentication/Signup.java	(revision 2992a81899371faf2ed221123d50f611470cc6a0)
++++ b/src/authentication/Signup.java	(date 1746906038268)
+@@ -21,19 +21,24 @@
+ 
+     public Signup(User user) {
+         this.user = user;
+-        registerUser();
+-        login = new Login(user);
+-    }
++        if (registerUser()) {
++
++            login = new Login(user);
++        } else {
++
++            login = null;
++        }
+ 
++    }
+ 
+-    private void registerUser() {
++
++    private boolean registerUser() {
+ 
+         try {
+ 
+             Gson gson = new GsonBuilder().setPrettyPrinting().create();
+             File file = new File(USERS_DB_FILE_PATH);
+             dataStorage.userDatabase database;
+-
+             if (file.exists()) {
+                 FileReader reader = new FileReader(file);
+                 database = gson.fromJson(reader, dataStorage.userDatabase.class);
+@@ -43,9 +48,17 @@
+                 database.users = new ArrayList<>();
+             }
+ 
++            for (userEntry entry : database.users) {
++                if (entry.email.equals(user.getEmail())) {
++
++                    System.err.println("Email already in use, please choose another one or try to sign in");
++                    return false;
++                }
++            }
++
+             userEntry entry = new userEntry();
+-            entry.id  = generateUniqueID(database.users);
+-            entry.filename = user.getusername().replace(" ","") + entry.id + ".txt";
++            entry.id = generateUniqueID(database.users);
++            entry.filename = user.getusername().replace(" ", "") + entry.id + ".txt";
+             entry.username = user.getusername();
+             entry.email = user.getEmail();
+             entry.password = user.getPassword();
+@@ -59,10 +72,13 @@
+             writer.close();
+ 
+             System.out.println("User resgistered successfully!");
+-        } catch (Exception e){
++        } catch (Exception e) {
+ 
+             System.err.println("Error registering user: " + e.getMessage());
++            return false;
+         }
++
++        return true;
+ 
+     }
+ 
+Index: files/users_db.json
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>{\"users\":[{\"id\":\"1\",\"filename\":\"MohamedEhabSabrySaberKandil.txt\",\"username\":\"Mohamed Ehab Sabry Saber Kandil\",\"email\":\"messk8@gmail.com\",\"password\":\"123456\",\"createdAt\":\"18:13:53.183716600+03:00\",\"lastLogin\":\"20:41:55.177119500+03:00\"},{\"id\":\"2\",\"filename\":\"EsraaEmary.txt\",\"username\":\"Esraa Emary\",\"email\":\"Esraa@gmail.com\",\"password\":\"123\",\"createdAt\":\"18:33:10.276854800+03:00\",\"lastLogin\":\"18:33:10.279868900+03:00\"},{\"id\":\"3\",\"filename\":\"AymanAhmed3.txt\",\"username\":\"Ayman Ahmed\",\"email\":\"Ayman@gmail.com\",\"password\":\"123\",\"createdAt\":\"18:43:15.998956700+03:00\",\"lastLogin\":\"18:43:16.004473600+03:00\"}]}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/files/users_db.json b/files/users_db.json
+--- a/files/users_db.json	(revision 2992a81899371faf2ed221123d50f611470cc6a0)
++++ b/files/users_db.json	(date 1746908633110)
+@@ -1,1 +1,31 @@
+-{"users":[{"id":"1","filename":"MohamedEhabSabrySaberKandil.txt","username":"Mohamed Ehab Sabry Saber Kandil","email":"messk8@gmail.com","password":"123456","createdAt":"18:13:53.183716600+03:00","lastLogin":"20:41:55.177119500+03:00"},{"id":"2","filename":"EsraaEmary.txt","username":"Esraa Emary","email":"Esraa@gmail.com","password":"123","createdAt":"18:33:10.276854800+03:00","lastLogin":"18:33:10.279868900+03:00"},{"id":"3","filename":"AymanAhmed3.txt","username":"Ayman Ahmed","email":"Ayman@gmail.com","password":"123","createdAt":"18:43:15.998956700+03:00","lastLogin":"18:43:16.004473600+03:00"}]}
+\ No newline at end of file
++{
++  "users": [
++    {
++      "id": "1",
++      "filename": "MohamedEhabSabrySaberKandil.txt",
++      "username": "Mohamed Ehab Sabry Saber Kandil",
++      "email": "messk9@gmail.com",
++      "password": "123456",
++      "createdAt": "18:13:53.183716600+03:00",
++      "lastLogin": "21:58:12.986530100+03:00"
++    },
++    {
++      "id": "2",
++      "filename": "EsraaEmary.txt",
++      "username": "Esraa Emary",
++      "email": "Esraa@gmail.com",
++      "password": "123",
++      "createdAt": "18:33:10.276854800+03:00",
++      "lastLogin": "18:33:10.279868900+03:00"
++    },
++    {
++      "id": "3",
++      "filename": "AymanAhmed3.txt",
++      "username": "Ayman Ahmed",
++      "email": "Ayman@gmail.com",
++      "password": "123",
++      "createdAt": "18:43:15.998956700+03:00",
++      "lastLogin": "18:43:16.004473600+03:00"
++    }
++  ]
++}
+\ No newline at end of file
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"d8d78022-7fa9-4c6b-8988-1f198cfd9836\" name=\"Changes\" comment=\"\">\r\n      <change afterPath=\"$PROJECT_DIR$/.idea/compiler.xml\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/.idea/encodings.xml\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/.idea/jarRepositories.xml\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/PennyPilot.iml\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/src/dataStorage/userDatabase.java\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/src/dataStorage/userEntry.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/misc.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/misc.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/modules.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/modules.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/files/users_db.json\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/files/users_db.json\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/Main.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/Main.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/authentication/Login.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/authentication/Login.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/authentication/Signup.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/authentication/Signup.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/users/User.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/users/User.java\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"FileTemplateManagerImpl\">\r\n    <option name=\"RECENT_TEMPLATES\">\r\n      <list>\r\n        <option value=\"Class\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"GitHubPullRequestSearchHistory\"><![CDATA[{\r\n  \"lastFilter\": {\r\n    \"state\": \"OPEN\",\r\n    \"assignee\": \"TheDestro22\"\r\n  }\r\n}]]></component>\r\n  <component name=\"GithubPullRequestsUISettings\"><![CDATA[{\r\n  \"selectedUrlAndAccountId\": {\r\n    \"url\": \"https://github.com/esraa-emary/Personal-Budgeting-Application.git\",\r\n    \"accountId\": \"eeb734a6-8933-445b-873b-beaa848f2c1f\"\r\n  }\r\n}]]></component>\r\n  <component name=\"ProjectColorInfo\">{\r\n  &quot;customColor&quot;: &quot;&quot;,\r\n  &quot;associatedIndex&quot;: 3\r\n}</component>\r\n  <component name=\"ProjectId\" id=\"2wtb4glttqf0CP7zAfuNz6EQnLQ\" />\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\"><![CDATA[{\r\n  \"keyToString\": {\r\n    \"Application.Main.executor\": \"Run\",\r\n    \"RunOnceActivity.ShowReadmeOnStart\": \"true\",\r\n    \"RunOnceActivity.git.unshallow\": \"true\",\r\n    \"SHARE_PROJECT_CONFIGURATION_FILES\": \"true\",\r\n    \"dart.analysis.tool.window.visible\": \"false\",\r\n    \"git-widget-placeholder\": \"main\",\r\n    \"kotlin-language-version-configured\": \"true\",\r\n    \"last_opened_file_path\": \"C:/Users/Esoooo/Downloads/PersonalBudgetingApp/PersonalBudgetingApp\",\r\n    \"node.js.detected.package.eslint\": \"true\",\r\n    \"node.js.detected.package.tslint\": \"true\",\r\n    \"node.js.selected.package.eslint\": \"(autodetect)\",\r\n    \"node.js.selected.package.tslint\": \"(autodetect)\",\r\n    \"nodejs_package_manager_path\": \"npm\",\r\n    \"vue.rearranger.settings.migration\": \"true\"\r\n  }\r\n}]]></component>\r\n  <component name=\"SharedIndexes\">\r\n    <attachedChunks>\r\n      <set>\r\n        <option value=\"bundled-jdk-9823dce3aa75-125ca727e0f0-intellij.indexing.shared.core-IU-243.24978.46\" />\r\n        <option value=\"bundled-js-predefined-d6986cc7102b-76f8388c3a79-JavaScript-IU-243.24978.46\" />\r\n      </set>\r\n    </attachedChunks>\r\n  </component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"d8d78022-7fa9-4c6b-8988-1f198cfd9836\" name=\"Changes\" comment=\"\" />\r\n      <created>1746863630426</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1746863630426</updated>\r\n      <workItem from=\"1746863638150\" duration=\"2428000\" />\r\n      <workItem from=\"1746866095548\" duration=\"14308000\" />\r\n      <workItem from=\"1746886949448\" duration=\"11468000\" />\r\n    </task>\r\n    <servers />\r\n  </component>\r\n  <component name=\"TypeScriptGeneratedFilesManager\">\r\n    <option name=\"version\" value=\"3\" />\r\n  </component>\r\n  <component name=\"XDebuggerManager\">\r\n    <breakpoint-manager>\r\n      <breakpoints>\r\n        <line-breakpoint enabled=\"true\" type=\"java-line\">\r\n          <url>file://$PROJECT_DIR$/src/authentication/Signup.java</url>\r\n          <line>32</line>\r\n          <option name=\"timeStamp\" value=\"1\" />\r\n        </line-breakpoint>\r\n      </breakpoints>\r\n    </breakpoint-manager>\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 2992a81899371faf2ed221123d50f611470cc6a0)
++++ b/.idea/workspace.xml	(date 1746908888648)
+@@ -4,21 +4,10 @@
+     <option name="autoReloadType" value="SELECTIVE" />
+   </component>
+   <component name="ChangeListManager">
+-    <list default="true" id="d8d78022-7fa9-4c6b-8988-1f198cfd9836" name="Changes" comment="">
+-      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/PennyPilot.iml" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/dataStorage/userDatabase.java" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/dataStorage/userEntry.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
++    <list default="true" id="d8d78022-7fa9-4c6b-8988-1f198cfd9836" name="Changes" comment="- Feat: Finished the Signup and the Login classes with minor edge cases and details still to be handled.">
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/files/users_db.json" beforeDir="false" afterPath="$PROJECT_DIR$/files/users_db.json" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/authentication/Login.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/authentication/Login.java" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/src/authentication/Signup.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/authentication/Signup.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/users/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/users/User.java" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+@@ -47,6 +36,9 @@
+     "accountId": "eeb734a6-8933-445b-873b-beaa848f2c1f"
+   }
+ }]]></component>
++  <component name="ProblemsViewState">
++    <option name="selectedTabId" value="Security Analysis" />
++  </component>
+   <component name="ProjectColorInfo">{
+   &quot;customColor&quot;: &quot;&quot;,
+   &quot;associatedIndex&quot;: 3
+@@ -92,22 +84,24 @@
+       <updated>1746863630426</updated>
+       <workItem from="1746863638150" duration="2428000" />
+       <workItem from="1746866095548" duration="14308000" />
+-      <workItem from="1746886949448" duration="11468000" />
++      <workItem from="1746886949448" duration="16768000" />
+     </task>
++    <task id="LOCAL-00001" summary="- Feat: Finished the Signup and the Login classes with minor edge cases and details still to be handled.">
++      <option name="closed" value="true" />
++      <created>1746903244279</created>
++      <option name="number" value="00001" />
++      <option name="presentableId" value="LOCAL-00001" />
++      <option name="project" value="LOCAL" />
++      <updated>1746903244279</updated>
++    </task>
++    <option name="localTasksCounter" value="2" />
+     <servers />
+   </component>
+   <component name="TypeScriptGeneratedFilesManager">
+     <option name="version" value="3" />
+   </component>
+-  <component name="XDebuggerManager">
+-    <breakpoint-manager>
+-      <breakpoints>
+-        <line-breakpoint enabled="true" type="java-line">
+-          <url>file://$PROJECT_DIR$/src/authentication/Signup.java</url>
+-          <line>32</line>
+-          <option name="timeStamp" value="1" />
+-        </line-breakpoint>
+-      </breakpoints>
+-    </breakpoint-manager>
++  <component name="VcsManagerConfiguration">
++    <MESSAGE value="- Feat: Finished the Signup and the Login classes with minor edge cases and details still to be handled." />
++    <option name="LAST_COMMIT_MESSAGE" value="- Feat: Finished the Signup and the Login classes with minor edge cases and details still to be handled." />
+   </component>
+ </project>
+\ No newline at end of file
