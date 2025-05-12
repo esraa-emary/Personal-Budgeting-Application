@@ -41,7 +41,7 @@ public class Signup {
 
             userEntry entry = new userEntry();
             entry.id = generateUniqueID(database.users);
-            entry.filename = user.getusername().replace(" ", "") + entry.id + ".txt";
+            entry.filename = user.getusername().replace(" ", "") + entry.id;
             entry.username = user.getusername();
             entry.email = user.getEmail();
             entry.password = user.getPassword();
@@ -81,22 +81,5 @@ public class Signup {
 
         return java.time.OffsetTime.now().toString();
     }
-
-//    private static class userEntry {
-//
-//        String id;
-//        String filename;
-//        String username;
-//        String email;
-//        String password;
-//        String createdAt;
-//        String lastLogin;
-//    }
-
-//    private static class userDatabase {
-//
-//        List<userEntry> users;
-//    }
 }
-
 

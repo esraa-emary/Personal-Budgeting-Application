@@ -1,3 +1,5 @@
+import static authentication.Validation.isValidEmail;
+import static authentication.Validation.isValidPassword;
 import static run.Format.*;
 import static run.Menu.*;
 
@@ -11,6 +13,7 @@ import authentication.*;
 import users.User;
 
 import java.util.Scanner;
+import java.util.regex.Matcher;
 
 public class Main {
     public static void subMenus(String filename) {
@@ -66,7 +69,9 @@ public class Main {
                     password = external_input.nextLine();
                     User user = new User(mail, password);
                     Login login = new Login(user);
-                    subMenus(login.getLoggedInUserFilename());
+                    if (login.isLoggedIn()) {
+                        subMenus(login.getLoggedInUserFilename());
+                    }
                     break;
 
                 case 2:
@@ -74,10 +79,43 @@ public class Main {
                     userName = external_input.nextLine();
                     System.out.print("Enter E-mail: ");
                     mail = external_input.nextLine();
+                    while (!isValidEmail(mail)) {
+                        System.out.println(Red + Bold + "Invalid e-mail address, please follow the format email@example.com" + Reset);
+                        System.out.print(Bold + "Enter E-mail: " + Reset);
+                        mail = external_input.nextLine();
+                    }
                     System.out.print("Enter password: ");
                     password = external_input.nextLine();
                     System.out.print("Enter confirm password: ");
                     confirmPassword = external_input.nextLine();
+
+                    while (!confirmPassword.equals(password) || !isValidPassword(password)) {
+
+                        if (!confirmPassword.equals(password) && !isValidPassword(password)) {
+
+                            System.out.println(Red + Bold + "Password must be at least 6 characters, and passwords need to match!" + Reset);
+                            System.out.print(Bold + "Enter password: " + Reset);
+                            password = external_input.nextLine();
+                            System.out.print(Bold + "Enter confirm password: " + Reset);
+                            confirmPassword = external_input.nextLine();
+                        } else if (!isValidPassword(password)) {
+                            System.out.println(Red + Bold + "Password must be at least 6 characters, please try again!" + Reset);
+                            System.out.print(Bold + "Enter password: " + Reset);
+                            password = external_input.nextLine();
+                            System.out.print(Bold + "Enter confirm password: " + Reset);
+                            confirmPassword = external_input.nextLine();
+
+                        } else {
+                            System.out.println(Red + Bold + "Passwords do not match, please try again" + Reset);
+                            System.out.print(Bold + "Enter password: " + Reset);
+                            password = external_input.nextLine();
+                            System.out.print("Enter confirm password: " + Reset);
+                            confirmPassword = external_input.nextLine();
+                        }
+                    }
+
+                    while (!isValidPassword(password)) {
+                    }
                     User newUser = new User(userName, mail, password);
                     Signup signup = new Signup(newUser);
                     subMenus(signup.login.getLoggedInUserFilename());

@@ -1,34 +1,4 @@
 {
   "users": [
-    {
-      "id": "1",
-      "filename": "MohamedEhabSabrySaberKandil.txt",
-      "username": "Mohamed Ehab Sabry Saber Kandil",
-      "email": "messk8@gmail.com",
-      "password": "123456",
-      "createdAt": "18:13:53.183716600+03:00",
-      "lastLogin": "06:10:08.012822100+03:00",
-      "current": false
-    },
-    {
-      "id": "3",
-      "filename": "AymanAhmed3.txt",
-      "username": "Ayman Ahmed",
-      "email": "Ayman@gmail.com",
-      "password": "123",
-      "createdAt": "18:43:15.998956700+03:00",
-      "lastLogin": "18:43:16.004473600+03:00",
-      "current": false
-    },
-    {
-      "id": "4",
-      "filename": "esraaemary4.txt",
-      "username": "esraa emary",
-      "email": "esraaemary33@gmail.com",
-      "password": "123",
-      "createdAt": "03:55:44.753433800+03:00",
-      "lastLogin": "08:11:39.568777+03:00",
-      "current": true
-    }
   ]
 }
