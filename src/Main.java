@@ -3,7 +3,6 @@ import static authentication.Validation.isValidPassword;
 import static run.Format.*;
 import static run.Menu.*;
 
-import Transactions.Transaction;
 import Transactions.TransactionController;
 import Transactions.TransactionService;
 import income.Budget;
@@ -13,9 +12,48 @@ import authentication.*;
 import users.User;
 
 import java.util.Scanner;
-import java.util.regex.Matcher;
 
+
+/**
+ * Main entry point for the Personal Budgeting Application.
+ * <p>
+ * This class serves as the primary controller for the application, handling:
+ * <ul>
+ *   <li>User authentication (login and signup)</li>
+ *   <li>Main menu navigation and selection</li>
+ *   <li>Submenu management for income and payment operations</li>
+ *   <li>Input validation for user credentials</li>
+ * </ul>
+ * <p>
+ * The application flow starts with authentication, then proceeds to various
+ * budget management options organized into income and payment categories.
+ *
+ * @author Budget Application Team
+ * @version 1.0
+ * @see authentication.Login
+ * @see authentication.Signup
+ * @see income.Budget
+ * @see Transactions.TransactionController
+ */
 public class Main {
+
+    /**
+     * Manages the submenu system after successful user authentication.
+     * <p>
+     * This method loads the user's budget data from their personal file and
+     * presents two main category options:
+     * <ul>
+     *   <li>Income management - for tracking income, savings, goals and reminders</li>
+     *   <li>Payment management - for tracking debts, donations and transactions</li>
+     * </ul>
+     * Each category contains its own set of operations that are handled by
+     * delegating to the appropriate methods in the {@link run.Menu} class.
+     *
+     * @param filename The data file identifier associated with the authenticated user
+     * @see run.Menu#optionsIncome
+     * @see run.Menu#optionsPayment
+     */
+
     public static void subMenus(String filename) {
         Scanner sub_menu_input = new Scanner(System.in);
         int choice, innerChoice;
@@ -55,6 +93,30 @@ public class Main {
             choice = Menu.displayMainMenuSections();
         }
     }
+
+    /**
+     * Application entry point that controls the authentication flow and main program loop.
+     * <p>
+     * This method displays the authentication menu with options to:
+     * <ul>
+     *   <li>Login with existing credentials</li>
+     *   <li>Sign up as a new user</li>
+     *   <li>Exit the application</li>
+     * </ul>
+     * <p>
+     * For login, it validates the email and password against stored credentials.
+     * For signup, it ensures the email follows a standard format and the password
+     * meets minimum security requirements before creating a new user account.
+     * <p>
+     * Upon successful authentication, it transitions to the submenu system for
+     * budget management operations.
+     *
+     * @param args Command line arguments (not used)
+     * @see authentication.Validation#isValidEmail
+     * @see authentication.Validation#isValidPassword
+     * @see authentication.Login
+     * @see authentication.Signup
+     */
 
     public static void main(String[] args) {
         while (isMain) {
@@ -108,6 +170,7 @@ public class Main {
                         } else {
                             System.out.println(Red + Bold + "Passwords do not match, please try again" + Reset);
                             System.out.print(Bold + "Enter password: " + Reset);
+
                             password = external_input.nextLine();
                             System.out.print("Enter confirm password: " + Reset);
                             confirmPassword = external_input.nextLine();

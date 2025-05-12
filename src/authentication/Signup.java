@@ -13,6 +13,28 @@ import java.util.List;
 import users.User;
 import dataStorage.*;
 
+/**
+ * Manages user registration for the Personal Budgeting Application.
+ * <p>
+ * This class is responsible for:
+ * <ul>
+ *   <li>Registering new users in the application</li>
+ *   <li>Storing user credentials in a JSON database</li>
+ *   <li>Generating unique user IDs</li>
+ *   <li>Initializing a login session after successful registration</li>
+ * </ul>
+ * <p>
+ * The class writes user information to a JSON database file and creates
+ * the file if it doesn't exist.
+ *
+ * @author Budget Application Team
+ * @version 1.0
+ * @see Login
+ * @see users.User
+ * @see dataStorage.userDatabase
+ * @see dataStorage.userEntry
+ */
+
 public class Signup {
     private static final String USERS_DB_FILE_PATH = "files/users_db.json";
     User user;
@@ -23,6 +45,21 @@ public class Signup {
         registerUser();
         login = new Login(user);
     }
+
+    /**
+     * Registers a new user in the application database.
+     * <p>
+     * This method:
+     * <ol>
+     *   <li>Creates or loads the user database from the JSON file</li>
+     *   <li>Creates a new user entry with generated unique ID</li>
+     *   <li>Sets initial user properties including timestamp and filename</li>
+     *   <li>Adds the new user to the database</li>
+     *   <li>Saves the updated database back to the JSON file</li>
+     * </ol>
+     * <p>
+     * The user's data file identifier is created based on username and unique ID.
+     */
 
     private void registerUser() {
         try {
@@ -61,6 +98,16 @@ public class Signup {
             System.err.println("Error registering user: " + e.getMessage());
         }
     }
+
+    /**
+     * Generates a unique numeric ID for new users.
+     * <p>
+     * This method determines the highest existing user ID in the database
+     * and increments it by one to create a new unique identifier.
+     *
+     * @param users The list of existing user entries in the database
+     * @return A string representation of the new unique ID
+     */
 
     private String generateUniqueID(List<userEntry> users) {
         int max_id = 0;
