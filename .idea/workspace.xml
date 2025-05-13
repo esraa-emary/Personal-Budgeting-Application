@@ -4,23 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d8d78022-7fa9-4c6b-8988-1f198cfd9836" name="Changes" comment="- Feat: Exported all the Javadoc as a website.">
-      <change afterPath="$PROJECT_DIR$/src/dataStorage/Budget_data.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/dataStorage/Income_manager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/users_db.json" beforeDir="false" afterPath="$PROJECT_DIR$/files/users_db.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Transactions/Transaction.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Transactions/Transaction.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Transactions/TransactionController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Transactions/TransactionController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Transactions/TransactionService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Transactions/TransactionService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/income/Expense.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/income/Expense.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/income/Goal.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/income/Goal.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/income/Income.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/income/Income.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/income/Reminder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/income/Reminder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/payment/Debt.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/payment/Debt.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/payment/Donate.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/payment/Donate.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/run/Format.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/run/Format.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/run/Greet.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/run/Greet.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/run/Menu.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/run/Menu.class" afterDir="false" />
+    <list default="true" id="d8d78022-7fa9-4c6b-8988-1f198cfd9836" name="Changes" comment="- Feat: Altered the user_database json file.">
+      <change beforePath="$PROJECT_DIR$/src/dataStorage/Budget_data.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dataStorage/Budget_data.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dataStorage/userEntry.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dataStorage/userEntry.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -105,7 +91,7 @@
       <workItem from="1747056501308" duration="243000" />
       <workItem from="1747056760928" duration="4266000" />
       <workItem from="1747079724068" duration="2721000" />
-      <workItem from="1747136804999" duration="6505000" />
+      <workItem from="1747136804999" duration="7685000" />
     </task>
     <task id="LOCAL-00001" summary="- Feat: Added Validation for emails and passwords while signing up.">
       <option name="closed" value="true" />
@@ -163,7 +149,15 @@
       <option name="project" value="LOCAL" />
       <updated>1747083002858</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="- Feat: Altered the user_database json file.">
+      <option name="closed" value="true" />
+      <created>1747147009734</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1747147009734</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -177,6 +171,7 @@
     <MESSAGE value="- Feat: Added all Javadoc for all files." />
     <MESSAGE value="- Feat: Added all remaning unversioned files." />
     <MESSAGE value="- Feat: Exported all the Javadoc as a website." />
-    <option name="LAST_COMMIT_MESSAGE" value="- Feat: Exported all the Javadoc as a website." />
+    <MESSAGE value="- Feat: Altered the user_database json file." />
+    <option name="LAST_COMMIT_MESSAGE" value="- Feat: Altered the user_database json file." />
   </component>
 </project>

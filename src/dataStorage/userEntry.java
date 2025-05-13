@@ -1,4 +1,8 @@
 package dataStorage;
+import income.Income;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Represents a single user record in the database for the Personal Budgeting Application.
@@ -60,4 +64,7 @@ public class userEntry {
      * Flag indicating if this is the currently active user
      */
     public boolean current;
+
+    public List<Budget_data> budgets = new ArrayList<Budget_data>();
+    public List<Income> incomes = new ArrayList<Income>();
 }
