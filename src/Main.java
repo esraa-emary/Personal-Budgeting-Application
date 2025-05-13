@@ -82,7 +82,7 @@ public class Main {
             switch (choice) {
                 case 1:
                     innerChoice = Menu.displayMainMenuIncome();
-                    while (innerChoice != 12) {
+                    while (innerChoice != 13) {
                         System.out.print("\n");
                         optionsIncome(innerChoice, bt, filename, sub_menu_input);
                         innerChoice = Menu.displayMainMenuIncome();
