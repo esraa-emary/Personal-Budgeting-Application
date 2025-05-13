@@ -8,7 +8,7 @@
       "password": "123456",
       "createdAt": "14:53:27.984333800+03:00",
       "lastLogin": "19:14:11.289863100+03:00",
-      "current": true,
+      "current": false,
       "budgets": [
         {
           "budgetId": "budget1",
@@ -73,8 +73,49 @@
       "password": "123456",
       "createdAt": "19:12:55.031116300+03:00",
       "lastLogin": "19:14:11.297448+03:00",
-      "current": true,
+      "current": false,
       "budgets": [],
+      "incomes": []
+    },
+    {
+      "id": "3",
+      "filename": "Esraa3",
+      "username": "Esraa",
+      "email": "esraa@gmail.com",
+      "password": "123456",
+      "createdAt": "20:44:36.312612300+03:00",
+      "lastLogin": "20:44:36.331129200+03:00",
+      "current": true,
+      "budgets": [
+        {
+          "budgetId": "budget3eea95bd",
+          "budget": 0.0,
+          "totalExpenses": 0.0,
+          "totalIncome": 0.0,
+          "totalDonates": 0.0,
+          "totalDebts": 0.0,
+          "expenses": [],
+          "incomes": [],
+          "goals": [],
+          "reminders": [],
+          "donates": [],
+          "debts": []
+        },
+        {
+          "budgetId": "budget880ede8a",
+          "budget": 1000.0,
+          "totalExpenses": 0.0,
+          "totalIncome": 0.0,
+          "totalDonates": 0.0,
+          "totalDebts": 0.0,
+          "expenses": [],
+          "incomes": [],
+          "goals": [],
+          "reminders": [],
+          "donates": [],
+          "debts": []
+        }
+      ],
       "incomes": []
     }
   ]

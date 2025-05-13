@@ -106,31 +106,6 @@ public class Main {
         }
     }
 
-    private static String getCurrentUserId(String filename) {
-        try {
-            File file = new File("files/users_db.json");
-            if (!file.exists()) {
-                System.out.println("User database not found");
-                return "1"; // Default ID if not found
-            }
-
-            Gson gson = new Gson();
-            FileReader reader = new FileReader(file);
-            userDatabase database = gson.fromJson(reader, userDatabase.class);
-            reader.close();
-
-            for (userEntry user : database.users) {
-                if (user.filename.equals(filename) || user.current) {
-                    return user.id;
-                }
-            }
-
-            return "1"; // Default ID if not found
-        } catch (Exception e) {
-            System.out.println("Error getting user ID: " + e.getMessage());
-            return "1"; // Default ID on error
-        }
-    }
 
     /**
      * Gets an existing budget for the user or creates a new one.
@@ -242,30 +217,6 @@ public class Main {
         }
     }
 
-
-    /**
-     * Application entry point that controls the authentication flow and main program loop.
-     * <p>
-     * This method displays the authentication menu with options to:
-     * <ul>
-     *   <li>Login with existing credentials</li>
-     *   <li>Sign up as a new user</li>
-     *   <li>Exit the application</li>
-     * </ul>
-     * <p>
-     * For login, it validates the email and password against stored credentials.
-     * For signup, it ensures the email follows a standard format and the password
-     * meets minimum security requirements before creating a new user account.
-     * <p>
-     * Upon successful authentication, it transitions to the submenu system for
-     * budget management operations.
-     *
-     * @param args Command line arguments (not used)
-     * @see authentication.Validation#isValidEmail
-     * @see authentication.Validation#isValidPassword
-     * @see authentication.Login
-     * @see authentication.Signup
-     */
 
     public static void main(String[] args) {
         int choice = Menu.displayMainMenuAuthentication();
