@@ -1,4 +1,69 @@
 {
   "users": [
+    {
+      "id": "1",
+      "filename": "MohamedEhab1",
+      "username": "Mohamed Ehab",
+      "email": "messk8@gmail.com",
+      "password": "123456",
+      "createdAt": "14:53:27.984333800+03:00",
+      "lastLogin": "16:01:35.968742300+03:00",
+      "current": true,
+      "budgets": [
+        {
+          "budgetId": "budget1",
+          "budgetName": "Monthly Budget",
+          "budget": 5000.0,
+          "totalExpense": 1200.0,
+          "totalIncome": 6000.0,
+          "totalDonates": 300.0,
+          "totalDebts": 500.0,
+          "expenses": [
+            {
+              "amount": 500.0,
+              "category": "Groceries"
+            },
+            {
+              "amount": 700.0,
+              "category": "Rent"
+            }
+          ],
+          "goals": [
+            {
+              "amount": 10000.0,
+              "date": "2024-12-25"
+            }
+          ],
+          "reminders": [
+            {
+              "title": "Pay rent",
+              "date": "2024-06-01"
+            }
+          ],
+          "donates": [
+            {
+              "amount": 300.0,
+              "source": "Red Cross"
+            }
+          ],
+          "debts": [
+            {
+              "amount": 500.0,
+              "source": "Credit Card"
+            }
+          ]
+        }
+      ],
+      "incomes": [
+        {
+          "amount": 5000.0,
+          "source": "Salary"
+        },
+        {
+          "amount": 1000.0,
+          "source": "Freelance"
+        }
+      ]
+    }
   ]
 }
