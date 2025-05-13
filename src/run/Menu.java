@@ -185,9 +185,21 @@ public class Menu {
      * Displays the Payment section menu with all available options.
      * <p>
      * Provides options for managing transactions, debt repayments,
-     * donations, and viewing financial reports.
+     * donations, and viewing financial reports. Users can also
+     * return to the previous menu.
+     * <p>
+     * The menu includes:
+     * <ul>
+     *   <li>Transaction management functionality</li>
+     *   <li>Debt repayment tracking</li>
+     *   <li>Donation management</li>
+     *   <li>Financial reporting</li>
+     * </ul>
      *
      * @return The user's selected option (1-7)
+     * @see income.Budget#addDebt(double, String)
+     * @see income.Budget#addDonate(double, String)
+     * @see Transactions.TransactionController
      */
 
     public static int displayMainMenuPayment() {
@@ -209,11 +221,14 @@ public class Menu {
      * <p>
      * Based on the user's choice, this method:
      * <ul>
-     *   <li>Collects necessary input for the selected operation</li>
-     *   <li>Performs the requested operation on the budget object</li>
-     *   <li>Saves any changes to the data file</li>
-     *   <li>Displays results or status messages</li>
+     *   <li>Handles adding budgets, expenses, incomes, goals, and reminders</li>
+     *   <li>Manages switching budgets</li>
+     *   <li>Displays financial data such as budgets, expenses, incomes, goals, and reminders</li>
+     *   <li>Sends reminders</li>
      * </ul>
+     * <p>
+     * This method validates user input and performs the requested operation
+     * on the provided budget object, saving any changes to the data file.
      *
      * @param innerChoice    The user's selected option from the Income menu
      * @param bt             The budget object to operate on

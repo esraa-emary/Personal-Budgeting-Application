@@ -19,7 +19,6 @@ import com.google.gson.GsonBuilder;
 import dataStorage.*;
 import payment.Debt;
 import payment.Donate;
-import run.*;
 
 /**
  * Manages a user's personal budget, expenses, incomes, and financial goals.
@@ -143,6 +142,19 @@ public class Budget {
         this.totalIncome = calculateUserTotalIncome();
     }
 
+    /**
+     * Loads a budget for a specific user based on the provided user ID and budget ID.
+     * <p>
+     * This method reads the user database from a JSON file and retrieves the budget
+     * associated with the given user ID and budget ID. If the user or budget is not found,
+     * appropriate error messages are displayed, and {@code null} is returned.
+     * </p>
+     *
+     * @param userId   The ID of the user whose budget is being loaded.
+     * @param budgetId The ID of the budget to load.
+     * @return The {@code Budget} object if found, or {@code null} if the user or budget is not found.
+     */
+
     public static Budget loadBudget(String userId, String budgetId) {
 
         try {
@@ -207,6 +219,21 @@ public class Budget {
         }
     }
 
+    /**
+     * Saves the current budget data to the JSON database.
+     * <p>
+     * This method updates the user's budget information in the JSON file located
+     * at the specified path. If the budget already exists, it is updated; otherwise,
+     * a new budget entry is added. The method ensures that the `userId` and `budgetId`
+     * are not null before proceeding.
+     * </p>
+     * <p>
+     * If the user or database is not found, appropriate error messages are displayed.
+     * </p>
+     *
+     * @throws IOException If an error occurs while reading or writing the JSON file.
+     */
+
     public void saveToJson() {
 
         if (userId == null || budgetId == null) {
@@ -266,6 +293,21 @@ public class Budget {
         }
     }
 
+    /**
+     * Calculates the total income for the current user.
+     * <p>
+     * This method reads the user database from a JSON file and sums up all income
+     * entries associated with the current user's ID. If the user or their incomes
+     * are not found, it returns 0.0.
+     * </p>
+     * <p>
+     * If an error occurs during file reading or parsing, it logs the error and
+     * returns 0.0.
+     * </p>
+     *
+     * @return The total income for the current user as a double, or 0.0 if no income is found or an error occurs.
+     */
+
     private double calculateUserTotalIncome() {
         try {
             File file = new File(USERS_DB_FILE_PATH);
@@ -296,6 +338,22 @@ public class Budget {
         }
     }
 
+    /**
+     * Retrieves the current user's ID based on the provided filename or the current user flag.
+     * <p>
+     * This method reads the user database from a JSON file and searches for a user whose
+     * `filename` matches the provided filename or is marked as the current user. If no match
+     * is found, it returns a default ID of "1".
+     * </p>
+     * <p>
+     * If the user database file does not exist or an error occurs during processing, the method
+     * logs an error message and returns the default ID of "1".
+     * </p>
+     *
+     * @param filename The filename associated with the user to search for.
+     * @return The user ID as a {@code String}, or "1" if no user is found or an error occurs.
+     */
+
     public static String getCurrentUserId(String filename) {
         try {
             File file = new File("files/users_db.json");
@@ -322,6 +380,24 @@ public class Budget {
         }
     }
 
+    /**
+     * Manages the budgets for a specific user.
+     * <p>
+     * This method provides a menu for managing budgets, allowing the user to:
+     * <ul>
+     *   <li>Switch to an existing budget</li>
+     *   <li>Create a new budget</li>
+     *   <li>Delete an existing budget</li>
+     *   <li>Exit the budget management menu</li>
+     * </ul>
+     * The method reads the user database from a JSON file, identifies the user by their ID,
+     * and performs the selected operation. If the user or database is not found, appropriate
+     * error messages are displayed.
+     * </p>
+     *
+     * @param userId The ID of the user whose budgets are being managed
+     * @return The selected or newly created {@code Budget} object, or {@code null} if no budget is selected
+     */
 
     public static Budget manageBudgets(String userId) {
 
@@ -383,6 +459,18 @@ public class Budget {
         }
     }
 
+    /**
+     * Creates a new budget for the specified user.
+     * <p>
+     * This method prompts the user to enter a budget name and an initial budget amount.
+     * If the entered amount is invalid, it defaults to 0.0. The new budget is then saved
+     * to the JSON database and returned.
+     * </p>
+     *
+     * @param userId The ID of the user for whom the budget is being created.
+     * @return The newly created {@code Budget} object.
+     */
+
     private static Budget createNewBudget(String userId) {
         System.out.println(Bold + "Enter budget name" + Reset);
         String budgetName = input.nextLine();
@@ -401,6 +489,20 @@ public class Budget {
         System.out.println(Bold + Green + "Budget created successfully!" + Reset);
         return newBudget;
     }
+
+    /**
+     * Allows the user to select a budget from a list of available budgets.
+     * <p>
+     * This method displays all available budgets for the specified user and prompts
+     * the user to select one. If the selection is invalid, an error message is displayed,
+     * and the method returns {@code null}. If a valid selection is made, the corresponding
+     * budget is loaded and returned.
+     * </p>
+     *
+     * @param userId  The ID of the user whose budgets are being displayed.
+     * @param budgets A list of {@code Budget_data} objects representing the user's budgets.
+     * @return The selected {@code Budget} object, or {@code null} if the selection is invalid.
+     */
 
     private static Budget SelectBudget(String userId, List<Budget_data> budgets) {
         System.out.println(Bold + Cyan + "\n<------- Available Budgets ------->\n" + Reset);
@@ -424,6 +526,20 @@ public class Budget {
 
         return Budget.loadBudget(userId, budgets.get(selection - 1).getBudgetId());
     }
+
+
+    /**
+     * Deletes a budget from the user's list of budgets.
+     * <p>
+     * This method allows the user to select a budget to delete from their list.
+     * It ensures that at least one budget remains and updates the user database
+     * after deletion. If the user cancels or makes an invalid selection, the
+     * operation is aborted.
+     * </p>
+     *
+     * @param userId  The ID of the user whose budget is being deleted
+     * @param budgets The list of budgets associated with the user
+     */
 
     private static void deleteBudget(String userId, List<Budget_data> budgets) {
         if (budgets == null || budgets.isEmpty()) {
@@ -576,6 +692,19 @@ public class Budget {
         }
     }
 
+
+    /**
+     * Retrieves the list of incomes for the current user.
+     * <p>
+     * This method reads the user database file and fetches the list of incomes
+     * associated with the current user's ID. If the user or their incomes are not
+     * found, an empty list is returned.
+     * </p>
+     *
+     * @return A list of {@code Income} objects for the current user, or an empty list if no incomes are found.
+     */
+
+
     public List<Income> getIncomes() {
         try {
             File file = new File(USERS_DB_FILE_PATH);
@@ -665,6 +794,21 @@ public class Budget {
             saveToJson();
         }
     }
+
+
+    /**
+     * Checks and updates the status of financial goals.
+     * <p>
+     * This method iterates through the list of financial goals and determines
+     * if any goals have been achieved based on the difference between the total
+     * income and total expenses. Achieved goals are removed from the list and
+     * saved to persistent storage.
+     * </p>
+     * <p>
+     * If any goals are achieved, the method saves the updated budget data to the
+     * JSON file.
+     * </p>
+     */
 
     private void checkGoals() {
         Iterator<Goal> iterator = goals.iterator();

@@ -2,18 +2,17 @@ import static authentication.Validation.isValidEmail;
 import static authentication.Validation.isValidPassword;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import java.io.File;
 import java.io.FileReader;
-import java.io.FileWriter;
-import java.util.ArrayList;
+
 import java.util.List;
 
 import users.User;
 import dataStorage.*;
 
 
+import static income.Budget.getCurrentUserId;
 import static run.Format.*;
 import static run.Menu.*;
 
@@ -23,8 +22,7 @@ import income.Budget;
 
 import run.Menu;
 import authentication.*;
-import users.User;
-import income.*;
+
 
 import java.util.Scanner;
 

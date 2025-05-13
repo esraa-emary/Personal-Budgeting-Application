@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d8d78022-7fa9-4c6b-8988-1f198cfd9836" name="Changes" comment="- Feat: Final edits on the budgeting system done.">
+    <list default="true" id="d8d78022-7fa9-4c6b-8988-1f198cfd9836" name="Changes" comment="- Fix: fixed the budget class .">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dataStorage/Budget_data.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dataStorage/Budget_data.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/income/Budget.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/income/Budget.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/run/Menu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/run/Menu.java" afterDir="false" />
     </list>
@@ -91,7 +94,7 @@
       <workItem from="1747056501308" duration="243000" />
       <workItem from="1747056760928" duration="4266000" />
       <workItem from="1747079724068" duration="2721000" />
-      <workItem from="1747136804999" duration="16326000" />
+      <workItem from="1747136804999" duration="18161000" />
     </task>
     <task id="LOCAL-00001" summary="- Feat: Added Validation for emails and passwords while signing up.">
       <option name="closed" value="true" />
@@ -181,7 +184,23 @@
       <option name="project" value="LOCAL" />
       <updated>1747158449711</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="- Fix: Just changed the place of some classes .">
+      <option name="closed" value="true" />
+      <created>1747158617910</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1747158617910</updated>
+    </task>
+    <task id="LOCAL-00013" summary="- Fix: fixed the budget class .">
+      <option name="closed" value="true" />
+      <created>1747158814564</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1747158814564</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -199,6 +218,8 @@
     <MESSAGE value="- Feat: Altered the budget_data file." />
     <MESSAGE value="- Feat: created persistent storage for all data." />
     <MESSAGE value="- Feat: Final edits on the budgeting system done." />
-    <option name="LAST_COMMIT_MESSAGE" value="- Feat: Final edits on the budgeting system done." />
+    <MESSAGE value="- Fix: Just changed the place of some classes ." />
+    <MESSAGE value="- Fix: fixed the budget class ." />
+    <option name="LAST_COMMIT_MESSAGE" value="- Fix: fixed the budget class ." />
   </component>
 </project>
