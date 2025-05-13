@@ -249,7 +249,6 @@ public class TransactionController {
      * <ol>
      *   <li>Displays active recurring transactions</li>
      *   <li>Prompts for the ID of the transaction to cancel</li>
-     *   <li>Requires password verification for security</li>
      *   <li>Delegates to the service to perform the cancellation</li>
      * </ol>
      */
@@ -264,10 +263,7 @@ public class TransactionController {
         int id = scanner.nextInt();
         scanner.nextLine();
 
-        System.out.print("Enter your password to confirm: ");
-        String password = scanner.nextLine();
-
-        if (transactionService.cancelRecurringTransaction(id, password)) {
+        if (transactionService.cancelRecurringTransaction(id)) {
             System.out.println("Transaction cancelled successfully.");
         } else {
             System.out.println("Failed to cancel transaction. Invalid ID or already cancelled.");
