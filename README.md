@@ -1,69 +1,67 @@
 # 💰 Personal-Budgeting-Application
 
-A personal budgeting software system that helps users efficiently track, manage, and plan their financial activities. This system is designed to simplify the process of budget management by providing intuitive tools for income and expense tracking, analysis, and reporting.
+A personal budgeting software system that helps users efficiently track, manage, and plan their financial activities. This system is designed to simplify the process of budget management by providing tools for income and expense tracking, analysis, and reporting.
 
 ## 📄 Overview
 
-This repository contains the Software Requirements Specification (SRS) for the **Personal Budgeting System**, developed as part of CS251 coursework. The system aims to assist individuals in managing their personal finances through an accessible and user-friendly application.
+This repository contains the Software Requirements Specification (SRS) for the **Personal Budgeting System**, developed as part of CS251 coursework. The system aims to assist individuals in managing their personal finances through an accessible and user-friendly console application.
 
 ## 📌 Features
 
 - User Authentication.
-- Secure login/signup with email, username, and password.
-- Account recovery via email verification.
-- Biometric authentication (fingerprint, facial recognition).
-- Income & Expense Tracking.
-- Add, edit, and delete income sources.
-- Categorize and track expenses (e.g., groceries, transportation).
-- Mark recurring transactions (income/expenses).
-- Budget Management.
-- Set monthly budget limits for categories.
-- Receive alerts when nearing or exceeding budgets.
-- Compare budgets across months.
-- Financial Goals.
-- Set savings goals (e.g., buying a car, Umrah trip).
-- Track progress with automated timelines.
-- Reports & Analytics
-- Visualize spending habits with charts and trends.
-- Generate reports (daily, weekly, monthly).
-- Debt Management
-- Track loans and repayment plans.
+- Secure login with email and password.
+- Secure signup with username, email, password, confirmed password.
 - Adjust balances dynamically.
-- AI-Powered Predictions
-- Forecast future expenses based on past data.
-- Donations
-- Log charitable donations and set reminders.
-
+- Add income sources.
+- Add Budgets.
+- Add Expenses in each Budget.
+- Categorize and track expenses (e.g., groceries, transportation).
+- Income & Expense Tracking.
+- Mark recurring transactions (income/expenses).
+- Financial Goals.
+- Set & Send reminders.
+- Debt Management.
+- Add Donations.
+- Reports & Analytics.
+  
 ## 🧑‍💻 User Roles
 
 - **Personal Users**: Individuals managing their own budgets.
-- **Administrators**: Manage user access and system integrity.
 
 ## 🔍 Functional Requirements
 
 - Users can register and log in securely.
-- Users can input, edit, and delete transactions.
-- Users can define budget limits and get alerts.
+- Users can input and delete transactions.
+- Users can define budget limits.
 - System supports various income/expense categories.
-- Generates detailed monthly/yearly financial summaries.
+- Generates detailed financial reports.
 
-## 🛠 Technologies (Suggested)
+## 🛠 Technologies  
 
-- **Frontend**: HTML, CSS, JavaScript (or a frontend framework like React)
-- **Backend**: Node.js / Python / Java
-- **Database**: MySQL / MongoDB
-- **Authentication**: JWT or session-based login
+### **Core Development**  
+- **Application Type**: Java Console Application  
+- **Core Language**: Java (JDK 11+)  
+- **Data Storage**: GSON (JSON file-based storage)  
+- **Libraries**:  
+  - `com.google.code.gson` (for JSON serialization/deserialization)  
+  - `java.util.Scanner` (for user input)
+ 
+### **Tools & Infrastructure**  
+- **Version Control**: Git  
+- **Hosting**: GitHub (for code repository)
 
+## **Tools for design**
+- draw.io
+    
 ## 📚 Documents
 
-- `SRS.pdf`: Software Requirements Specification for the Personal Budgeting System
+- `SRS.pdf`: Software Requirements Specification for the Personal Budgeting System.
+- `SDS.pdf`: Software Design Specification for the Personal Budgeting System.
 
 ## 📈 Future Enhancements
 
-- Mobile app support
-- AI-based budgeting recommendations
-- Currency conversion for international users
-- Integration with banking APIs
+- Currency conversion for international users.
+- Sending real mails in specific dates.
 
 ## 📅 Version
 
