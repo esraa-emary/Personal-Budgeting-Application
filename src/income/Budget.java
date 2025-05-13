@@ -1,6 +1,8 @@
 package income;
 
 import static run.Format.*;
+import static run.Menu.checkValidity;
+import static run.Menu.input;
 
 import java.io.*;
 import java.util.*;
@@ -17,6 +19,7 @@ import com.google.gson.GsonBuilder;
 import dataStorage.*;
 import payment.Debt;
 import payment.Donate;
+import run.*;
 
 /**
  * Manages a user's personal budget, expenses, incomes, and financial goals.
@@ -669,7 +672,7 @@ public class Budget {
 
         while (iterator.hasNext()) {
             Goal goal = iterator.next();
-            if (totalIncome - totalExpense >= goal.amount){
+            if (totalIncome - totalExpense >= goal.amount) {
                 System.out.println(Bold + Green + "You achieved your goal: " + goal.amount + "$" + Reset);
                 achievedGoals.add(goal);
                 iterator.remove();
