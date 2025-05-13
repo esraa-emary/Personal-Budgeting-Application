@@ -137,6 +137,7 @@ public class Budget {
 
         this.userId = userId;
         this.budgetId = budgetName;
+        this.budgetName = budgetName;
         this.budget = initialAmount;
         this.budgetId = "budget" + UUID.randomUUID().toString().substring(0, 8);
         this.totalIncome = calculateUserTotalIncome();

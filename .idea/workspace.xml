@@ -4,12 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d8d78022-7fa9-4c6b-8988-1f198cfd9836" name="Changes" comment="- Fix: fixed the budget class .">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dataStorage/Budget_data.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dataStorage/Budget_data.java" afterDir="false" />
+    <list default="true" id="d8d78022-7fa9-4c6b-8988-1f198cfd9836" name="Changes" comment="- Fix: Added javadoc for the remaning functions and classes.">
       <change beforePath="$PROJECT_DIR$/src/income/Budget.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/income/Budget.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/run/Menu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/run/Menu.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,25 +43,25 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.Main.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "dart.analysis.tool.window.visible": "false",
-    "git-widget-placeholder": "main",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Life/FCAI_Stuff/Second_Year/2nd_Term/SWE/Assignments/Personal-Budgeting-Application/files",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Life/FCAI_Stuff/Second_Year/2nd_Term/SWE/Assignments/Personal-Budgeting-Application/files&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Life\FCAI_Stuff\Second_Year\2nd_Term\SWE\Assignments\Personal-Budgeting-Application\files" />
@@ -94,7 +90,7 @@
       <workItem from="1747056501308" duration="243000" />
       <workItem from="1747056760928" duration="4266000" />
       <workItem from="1747079724068" duration="2721000" />
-      <workItem from="1747136804999" duration="18161000" />
+      <workItem from="1747136804999" duration="18698000" />
     </task>
     <task id="LOCAL-00001" summary="- Feat: Added Validation for emails and passwords while signing up.">
       <option name="closed" value="true" />
@@ -200,7 +196,23 @@
       <option name="project" value="LOCAL" />
       <updated>1747158814564</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="- Fix: Added javadoc for the remaning functions and classes.">
+      <option name="closed" value="true" />
+      <created>1747162665410</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1747162665410</updated>
+    </task>
+    <task id="LOCAL-00015" summary="- Fix: Added javadoc for the remaning functions and classes.">
+      <option name="closed" value="true" />
+      <created>1747162685473</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1747162685473</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -220,6 +232,7 @@
     <MESSAGE value="- Feat: Final edits on the budgeting system done." />
     <MESSAGE value="- Fix: Just changed the place of some classes ." />
     <MESSAGE value="- Fix: fixed the budget class ." />
-    <option name="LAST_COMMIT_MESSAGE" value="- Fix: fixed the budget class ." />
+    <MESSAGE value="- Fix: Added javadoc for the remaning functions and classes." />
+    <option name="LAST_COMMIT_MESSAGE" value="- Fix: Added javadoc for the remaning functions and classes." />
   </component>
 </project>
