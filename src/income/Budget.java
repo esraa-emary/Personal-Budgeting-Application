@@ -293,6 +293,195 @@ public class Budget {
         }
     }
 
+    public static String getCurrentUserId(String filename) {
+        try {
+            File file = new File("files/users_db.json");
+            if (!file.exists()) {
+                System.out.println("User database not found");
+                return "1"; // Default ID if not found
+            }
+
+            Gson gson = new Gson();
+            FileReader reader = new FileReader(file);
+            userDatabase database = gson.fromJson(reader, userDatabase.class);
+            reader.close();
+
+            for (userEntry user : database.users) {
+                if (user.filename.equals(filename) || user.current) {
+                    return user.id;
+                }
+            }
+
+            return "1"; // Default ID if not found
+        } catch (Exception e) {
+            System.out.println("Error getting user ID: " + e.getMessage());
+            return "1"; // Default ID on error
+        }
+    }
+
+
+    public static Budget manageBudgets(String userId) {
+
+        try {
+            File file = new File("files/users_db.json");
+            if (!file.exists()) {
+                System.out.println(Red + Bold + "User database not found" + Reset);
+                return null;
+            }
+
+            Gson gson = new Gson();
+            FileReader reader = new FileReader(file);
+            userDatabase database = gson.fromJson(reader, userDatabase.class);
+            reader.close();
+
+            userEntry user = null;
+            for (userEntry u : database.users) {
+
+                if (u.id.equals(userId)) {
+                    user = u;
+                    break;
+                }
+            }
+            if (user == null) {
+                System.out.println(Red + "User not found" + Reset);
+                return null;
+            }
+
+            // Display budget management menu
+            System.out.println(Bold + Cyan + "\n<------- Budget Management ------->\n" + Reset);
+            System.out.println(Bold + "1 -> Switch Budget" + Reset);
+            System.out.println(Bold + "2 -> Create New Budget" + Reset);
+            System.out.println(Bold + "3 -> Delete Budget" + Reset);
+            System.out.println(Bold + Red + "4 -> Back" + Reset);
+            System.out.printf(Bold + "Choose an option: " + Reset);
+
+            int choice = checkValidity();
+            switch (choice) {
+                case 1:
+                    if (user.budgets == null || user.budgets.isEmpty()) {
+                        System.out.println(Yellow + "No budgets available. Creating a new budget." + Reset);
+                        return createNewBudget(userId);
+                    } else {
+                        return SelectBudget(userId, user.budgets);
+                    }
+                case 2:
+                    return createNewBudget(userId);
+                case 3:
+                    deleteBudget(userId, user.budgets);
+                    return null;
+                case 4:
+                default:
+                    return null;
+            }
+        } catch (Exception e) {
+
+            System.out.println(Red + "Error managing budgets: " + e.getMessage() + Reset);
+            return null;
+        }
+    }
+
+    private static Budget createNewBudget(String userId) {
+        System.out.println(Bold + "Enter budget name" + Reset);
+        String budgetName = input.nextLine();
+
+        System.out.println(Bold + "Enter intial budget amount: " + Reset);
+        double intitalAmount;
+        try {
+            intitalAmount = Double.parseDouble(input.nextLine());
+        } catch (NumberFormatException e) {
+            System.out.println(Red + "Invalid amount, using 0.0" + Reset);
+            intitalAmount = 0.0;
+        }
+
+        Budget newBudget = new Budget(userId, budgetName, intitalAmount);
+        newBudget.saveToJson();
+        System.out.println(Bold + Green + "Budget created successfully!" + Reset);
+        return newBudget;
+    }
+
+    private static Budget SelectBudget(String userId, List<Budget_data> budgets) {
+        System.out.println(Bold + Cyan + "\n<------- Available Budgets ------->\n" + Reset);
+        for (int i = 0; i < budgets.size(); i++) {
+            System.out.println(Bold + (i + 1) + " -> " + budgets.get(i).getBudgetName() +
+                    " ($" + budgets.get(i).getBudget() + ")" + Reset);
+        }
+        System.out.printf(Bold + "Choose a budget: " + Reset);
+
+        int selection;
+        try {
+            selection = checkValidity();
+            if (selection < 1 || selection > budgets.size()) {
+                System.out.println(Red + "Invalid selection" + Reset);
+                return null;
+            }
+        } catch (Exception e) {
+            System.out.println(Red + "Invalid input" + Reset);
+            return null;
+        }
+
+        return Budget.loadBudget(userId, budgets.get(selection - 1).getBudgetId());
+    }
+
+    private static void deleteBudget(String userId, List<Budget_data> budgets) {
+        if (budgets == null || budgets.isEmpty()) {
+            System.out.println(Yellow + "No budgets available to delete." + Reset);
+            return;
+        }
+
+        if (budgets.size() == 1) {
+            System.out.println(Red + "Cannot delete your only budget." + Reset);
+            return;
+        }
+
+        // Show available budgets for deletion
+        System.out.println(Bold + Cyan + "\n<------- Select Budget to Delete ------->\n" + Reset);
+        for (int i = 0; i < budgets.size(); i++) {
+            System.out.println(Bold + (i + 1) + " -> " + budgets.get(i).getBudgetName() + Reset);
+        }
+        System.out.printf(Bold + "Choose a budget to delete (or 0 to cancel): " + Reset);
+
+        int selection = checkValidity();
+        if (selection == 0) {
+            System.out.println(Yellow + "Deletion cancelled." + Reset);
+            return;
+        }
+
+        if (selection < 1 || selection > budgets.size()) {
+            System.out.println(Red + "Invalid selection" + Reset);
+            return;
+        }
+
+        try {
+            // Remove the budget from the user's profile
+            String budgetIdToDelete = budgets.get(selection - 1).getBudgetId();
+            String budgetNameToDelete = budgets.get(selection - 1).getBudgetName();
+
+            // Load the database
+            File file = new File("files/users_db.json");
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            FileReader reader = new FileReader(file);
+            userDatabase database = gson.fromJson(reader, userDatabase.class);
+            reader.close();
+
+            // Find the user and remove the budget
+            for (userEntry u : database.users) {
+                if (u.id.equals(userId)) {
+                    u.budgets.remove(selection - 1);
+                    break;
+                }
+            }
+
+            // Save the updated database
+            FileWriter writer = new FileWriter(file);
+            writer.write(gson.toJson(database));
+            writer.close();
+
+            System.out.println(Bold + Green + "Budget '" + budgetNameToDelete + "' deleted successfully!" + Reset);
+        } catch (Exception e) {
+            System.out.println(Red + "Error deleting budget: " + e.getMessage() + Reset);
+        }
+    }
+
     /**
      * Sets the budget to a new amount.
      *
