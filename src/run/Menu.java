@@ -66,11 +66,11 @@ public class Menu {
      * @see authentication.Validation#isValidNumber(String)
      */
     public static int checkValidity() {
-        String checkNumber = input.next();
-        while (!isValidNumber(checkNumber)) {
+        String checkNumber = input.nextLine();
+        while (!isValidNumber(checkNumber) || checkNumber.isEmpty()) {
             System.out.println(Red + Bold + "\nInvalid input, please try again" + Reset);
             System.out.printf(Bold + "choose an option: " + Reset);
-            checkNumber = input.next();
+            checkNumber = input.nextLine();
         }
         return Integer.parseInt(checkNumber);
     }
@@ -86,10 +86,10 @@ public class Menu {
      */
 
     public static int checkAmount() {
-        String amount = input.next();
-        while (!isValidAmount(amount)) {
+        String amount = input.nextLine();
+        while (!isValidAmount(amount) || amount.isEmpty()) {
             System.out.println(Red + Bold + "\nInvalid input, please try again" + Reset);
-            amount = input.next();
+            amount = input.nextLine();
         }
         return Integer.parseInt(amount);
     }
@@ -104,10 +104,10 @@ public class Menu {
      */
 
     public static String checkDate() {
-        String date = input.next();
-        while (!isValidDate(date)) {
+        String date = input.nextLine();
+        while (!isValidDate(date) || date.isEmpty()) {
             System.out.println(Red + Bold + "\nInvalid input, please try again" + Reset);
-            date = input.next();
+            date = input.nextLine();
         }
         return date;
     }
@@ -261,14 +261,24 @@ public class Menu {
                     }
                 }
                 System.out.print("What did you exactly pay for: ");
-                String cat = external_input.next();
+                String cat = external_input.nextLine();
+                while (cat.isEmpty()) {
+                    System.out.println(Red + Bold + "\nInvalid input, please try again" + Reset);
+                    cat = external_input.nextLine();
+                }
+
                 bt.addExpense(am, cat);
                 bt.saveData(fileName);
                 break;
 
             case 3:
                 System.out.print("Enter Source of income: ");
-                source = external_input.next();
+                source = external_input.nextLine();
+                while (source.isEmpty()) {
+                    System.out.println(Red + Bold + "\nInvalid input, please try again" + Reset);
+                    source = external_input.nextLine();
+                }
+
                 System.out.print("How much is the amount of income: ");
                 do {
                     amount = checkAmount();
@@ -303,7 +313,11 @@ public class Menu {
                 System.out.print("Enter date you want as (YYYY-MM-DD): ");
                 date = checkDate();
                 System.out.print("What is the title of this reminder: ");
-                title = external_input.next();
+                title = external_input.nextLine();
+                while (title.isEmpty()) {
+                    System.out.println(Red + Bold + "\nInvalid input, please try again" + Reset);
+                    title = external_input.nextLine();
+                }
 
                 bt.addReminder(title, date);
                 bt.saveData(fileName);
@@ -374,7 +388,7 @@ public class Menu {
                 break;
 
             default:
-                System.out.println("Invalid option. Please choose a number between 1 and 8.");
+                System.out.println("Invalid option. Please choose a number between 1 and 13.");
                 break;
         }
     }
@@ -408,7 +422,12 @@ public class Menu {
 
             case 2:
                 System.out.print("Enter source of debt: ");
-                source = external_input.next();
+                source = external_input.nextLine();
+                while (source.isEmpty()) {
+                    System.out.println(Red + Bold + "\nInvalid input, please try again" + Reset);
+                    source = external_input.nextLine();
+                }
+                
                 System.out.print("How much is the amount of debt: ");
                 do {
                     amount = checkAmount();
@@ -420,7 +439,12 @@ public class Menu {
 
             case 3:
                 System.out.print("Enter source to donate: ");
-                source = external_input.next();
+                source = external_input.nextLine();
+                while (source.isEmpty()) {
+                    System.out.println(Red + Bold + "\nInvalid input, please try again" + Reset);
+                    source = external_input.nextLine();
+                }
+                
                 System.out.print("How much is the amount of money: ");
                 do {
                     amount = checkAmount();
@@ -470,7 +494,7 @@ public class Menu {
                 break;
 
             default:
-                System.out.println("Invalid option. Please choose a number between 1 and 6.");
+                System.out.println("Invalid option. Please choose a number between 1 and 7.");
         }
     }
 }
