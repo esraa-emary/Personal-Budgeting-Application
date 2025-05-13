@@ -125,6 +125,8 @@ public class Signup {
      * @param users The list of existing user entries in the database
      * @return A string representation of the new unique ID
      */
+
+    public double user_id = 0;
     private String generateUniqueID(List<userEntry> users) {
         int max_id = 0;
         for (userEntry user : users) {
@@ -136,6 +138,7 @@ public class Signup {
             } catch (NumberFormatException ignored) {
             }
         }
+        user_id = max_id + 1;
         return String.valueOf(max_id + 1);
     }
 

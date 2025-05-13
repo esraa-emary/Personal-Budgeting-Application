@@ -4,9 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d8d78022-7fa9-4c6b-8988-1f198cfd9836" name="Changes" comment="- Feat: Altered the user_database json file.">
-      <change beforePath="$PROJECT_DIR$/src/dataStorage/Budget_data.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dataStorage/Budget_data.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dataStorage/userEntry.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dataStorage/userEntry.java" afterDir="false" />
+    <list default="true" id="d8d78022-7fa9-4c6b-8988-1f198cfd9836" name="Changes" comment="- Feat: Altered the budget_data file.">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/users_db.json" beforeDir="false" afterPath="$PROJECT_DIR$/files/users_db.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/authentication/Signup.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/authentication/Signup.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/income/Budget.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/income/Budget.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -91,7 +94,7 @@
       <workItem from="1747056501308" duration="243000" />
       <workItem from="1747056760928" duration="4266000" />
       <workItem from="1747079724068" duration="2721000" />
-      <workItem from="1747136804999" duration="7685000" />
+      <workItem from="1747136804999" duration="12393000" />
     </task>
     <task id="LOCAL-00001" summary="- Feat: Added Validation for emails and passwords while signing up.">
       <option name="closed" value="true" />
@@ -157,7 +160,15 @@
       <option name="project" value="LOCAL" />
       <updated>1747147009734</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="- Feat: Altered the budget_data file.">
+      <option name="closed" value="true" />
+      <created>1747148381481</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1747148381481</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -172,6 +183,7 @@
     <MESSAGE value="- Feat: Added all remaning unversioned files." />
     <MESSAGE value="- Feat: Exported all the Javadoc as a website." />
     <MESSAGE value="- Feat: Altered the user_database json file." />
-    <option name="LAST_COMMIT_MESSAGE" value="- Feat: Altered the user_database json file." />
+    <MESSAGE value="- Feat: Altered the budget_data file." />
+    <option name="LAST_COMMIT_MESSAGE" value="- Feat: Altered the budget_data file." />
   </component>
 </project>

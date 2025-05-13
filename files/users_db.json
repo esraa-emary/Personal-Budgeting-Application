@@ -7,63 +7,75 @@
       "email": "messk8@gmail.com",
       "password": "123456",
       "createdAt": "14:53:27.984333800+03:00",
-      "lastLogin": "16:01:35.968742300+03:00",
+      "lastLogin": "19:14:11.289863100+03:00",
       "current": true,
       "budgets": [
         {
           "budgetId": "budget1",
           "budgetName": "Monthly Budget",
           "budget": 5000.0,
-          "totalExpense": 1200.0,
+          "totalExpenses": 0.0,
           "totalIncome": 6000.0,
           "totalDonates": 300.0,
           "totalDebts": 500.0,
           "expenses": [
             {
-              "amount": 500.0,
-              "category": "Groceries"
+              "category": "Groceries",
+              "amount": 500.0
             },
             {
-              "amount": 700.0,
-              "category": "Rent"
+              "category": "Rent",
+              "amount": 700.0
             }
           ],
           "goals": [
             {
-              "amount": 10000.0,
-              "date": "2024-12-25"
+              "date": "2024-12-25",
+              "amount": 10000.0
             }
           ],
           "reminders": [
             {
-              "title": "Pay rent",
-              "date": "2024-06-01"
+              "date": "2024-06-01",
+              "title": "Pay rent"
             }
           ],
           "donates": [
             {
-              "amount": 300.0,
-              "source": "Red Cross"
+              "source": "Red Cross",
+              "amount": 300.0
             }
           ],
           "debts": [
             {
-              "amount": 500.0,
-              "source": "Credit Card"
+              "source": "Credit Card",
+              "amount": 500.0
             }
           ]
         }
       ],
       "incomes": [
         {
-          "amount": 5000.0,
-          "source": "Salary"
+          "source": "Salary",
+          "amount": 5000.0
         },
         {
-          "amount": 1000.0,
-          "source": "Freelance"
+          "source": "Freelance",
+          "amount": 1000.0
         }
       ]
+    },
+    {
+      "id": "2",
+      "filename": "MohamedEhabSabry2",
+      "username": "Mohamed Ehab Sabry",
+      "email": "messk8@gmail.com",
+      "password": "123456",
+      "createdAt": "19:12:55.031116300+03:00",
+      "lastLogin": "19:14:11.297448+03:00",
+      "current": true,
+      "budgets": [],
+      "incomes": []
     }
   ]
 }

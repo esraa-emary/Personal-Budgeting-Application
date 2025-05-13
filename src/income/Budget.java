@@ -3,9 +3,7 @@ package income;
 import static run.Format.*;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 import java.io.File;
 import java.io.FileReader;
@@ -15,6 +13,7 @@ import com.google.gson.Gson;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import com.google.gson.GsonBuilder;
 import dataStorage.*;
 import payment.Debt;
 import payment.Donate;
@@ -67,10 +66,6 @@ public class Budget {
      */
     public ArrayList<Income> incomes = new ArrayList<>();
 
-    /**
-     * Sum of all income
-     */
-    public double totalIncome = 0;
 
     /**
      * Collection of user's financial goals
@@ -117,6 +112,11 @@ public class Budget {
      */
     private String usernameReminder = "";
 
+    private String userId;
+    private String budgetId;
+    private String budgetName;
+    public double totalIncome;
+
     /**
      * Creates a new budget with the specified initial amount.
      *
@@ -129,11 +129,168 @@ public class Budget {
     /**
      * Creates a budget and loads existing data from the specified file.
      *
-     * @param filename The name of the file to load budget data from
      * @see #loadData(String)
      */
-    public Budget(String filename) {
-        loadData(filename);
+    public Budget(String userId, String budgetName, double initialAmount) {
+
+        this.userId = userId;
+        this.budgetId = budgetName;
+        this.budget = initialAmount;
+        this.budgetId = "budget" + UUID.randomUUID().toString().substring(0, 8);
+        this.totalIncome = calculateUserTotalIncome();
+    }
+
+    public static Budget loadBudget(String userId, String budgetId) {
+
+        try {
+            File file = new File(USERS_DB_FILE_PATH);
+            if (!file.exists()) {
+                System.out.println("User database not found");
+                return null;
+            }
+
+            Gson gson = new Gson();
+            FileReader reader = new FileReader(file);
+            userDatabase database = gson.fromJson(reader, userDatabase.class);
+            reader.close();
+
+            userEntry user = null;
+            for (userEntry u : database.users) {
+                if (u.id.equals(userId)) {
+                    user = u;
+                    break;
+                }
+            }
+
+            if (user == null) {
+
+                System.out.println("User not found");
+                return null;
+            }
+
+            Budget_data budgetData = null;
+            for (Budget_data bd : user.budgets) {
+                if (bd.getBudgetId().equals(budgetId)) {
+                    budgetData = bd;
+                    break;
+                }
+            }
+
+            if (budgetData == null) {
+                System.out.println("Budget not found");
+                return null;
+            }
+
+            Budget budget = new Budget(budgetData.getBudget());
+            budget.userId = userId;
+            budget.budgetId = budgetId;
+            budget.budgetName = budgetData.getBudgetName();
+            budget.totalExpense = budgetData.getTotalExpenses();
+            budget.totalDonates = budgetData.getTotalDonates();
+            budget.totalDebts = budgetData.getTotalDebts();
+            budget.expenses = new ArrayList<>(budgetData.getExpenses());
+            budget.goals = new ArrayList<>(budgetData.getGoals());
+            budget.reminders = new ArrayList<>(budgetData.getReminders());
+            budget.donates = new ArrayList<>(budgetData.getDonates());
+            budget.debts = new ArrayList<>(budgetData.getDebts());
+
+            budget.totalIncome = budget.calculateUserTotalIncome();
+
+            return budget;
+        } catch (Exception e) {
+            System.out.println("Error loading budget: " + e.getMessage());
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public void saveToJson() {
+
+        if (userId == null || budgetId == null) {
+            System.out.println("Cannot save: Budget ID or User ID is missing");
+            return;
+        }
+
+        try {
+            File file = new File(USERS_DB_FILE_PATH);
+            if (!file.exists()) {
+                System.out.println("User database not found");
+                return;
+            }
+
+            Gson gson = new Gson();
+            FileReader reader = new FileReader(file);
+            userDatabase database = gson.fromJson(reader, userDatabase.class);
+            reader.close();
+
+            userEntry user = null;
+            for (userEntry u : database.users) {
+                if (u.id.equals(userId)) {
+                    user = u;
+                    break;
+                }
+            }
+            if (user == null) {
+                System.out.println("User not found");
+                return;
+
+            }
+
+            boolean budgetFound = false;
+            for (int i = 0; i < user.budgets.size(); i++) {
+                if (user.budgets.get(i).getBudgetId().equals(budgetId)) {
+                    Budget_data update_budget = new Budget_data(this, budgetId, budgetName);
+                    user.budgets.set(i, update_budget);
+                    budgetFound = true;
+                    break;
+                }
+            }
+
+            if (!budgetFound) {
+                Budget_data new_budget_data = new Budget_data(this, budgetId, budgetName);
+                user.budgets.add(new_budget_data);
+            }
+
+            FileWriter writer = new FileWriter(file);
+            writer.write(gson.toJson(database));
+            writer.close();
+
+            System.out.println("Budget saved successfully!");
+
+        } catch (Exception e) {
+            System.out.println("Error saving budget: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    private double calculateUserTotalIncome() {
+        try {
+            File file = new File(USERS_DB_FILE_PATH);
+            if (!file.exists()) {
+                return 0.0;
+            }
+
+            Gson gson = new Gson();
+            FileReader reader = new FileReader(file);
+            userDatabase database = gson.fromJson(reader, userDatabase.class);
+            reader.close();
+
+            for (userEntry u : database.users) {
+                if (u.id.equals(userId)) {
+                    double total = 0.0;
+                    if (u.incomes != null) {
+                        for (Income income : u.incomes) {
+                            total += income.amount;
+                        }
+                    }
+                    return total;
+                }
+            }
+            return 0.0;
+        } catch (Exception e) {
+            System.out.println("Error calculating user total income: " + e.getMessage());
+            return 0.0;
+        }
     }
 
     /**
@@ -170,6 +327,7 @@ public class Budget {
             expenses.add(new Expense(amount, category));
             totalExpense += amount;
             System.out.println("Expense added: " + "$" + Bold + Blue + amount + Reset + " for " + Bold + Blue + category + Reset);
+            saveToJson();
         }
     }
 
@@ -179,10 +337,76 @@ public class Budget {
      * @param amount The income amount
      * @param source The source of the income
      */
+
     public void addIncome(double amount, String source) {
-        incomes.add(new Income(amount, source));
-        totalIncome += amount;
-        System.out.println("Income added: " + "$" + Bold + Blue + amount + Reset + " from " + Bold + Blue + source + Reset);
+        try {
+            // Read the current database
+            File file = new File(USERS_DB_FILE_PATH);
+            if (!file.exists()) {
+                System.out.println("User database not found");
+                return;
+            }
+
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            FileReader reader = new FileReader(file);
+            userDatabase database = gson.fromJson(reader, userDatabase.class);
+            reader.close();
+
+            // Find the user
+            for (userEntry user : database.users) {
+                if (user.id.equals(userId)) {
+                    // Initialize incomes list if null
+                    if (user.incomes == null) {
+                        user.incomes = new ArrayList<>();
+                    }
+
+                    // Add the new income
+                    user.incomes.add(new Income(amount, source));
+
+                    // Save the updated database
+                    FileWriter writer = new FileWriter(file);
+                    writer.write(gson.toJson(database));
+                    writer.close();
+
+                    // Update local total income
+                    this.totalIncome = calculateUserTotalIncome();
+
+                    System.out.println("Income added: " + "$" + Bold + Blue + amount + Reset + " from " + Bold + Blue + source + Reset);
+
+                    // Check goals after adding income
+                    checkGoals();
+                    return;
+                }
+            }
+            System.out.println("User not found");
+        } catch (Exception e) {
+            System.out.println("Error adding income: " + e.getMessage());
+        }
+    }
+
+    public List<Income> getIncomes() {
+        try {
+            File file = new File(USERS_DB_FILE_PATH);
+            if (!file.exists()) {
+                return new ArrayList<>();
+            }
+
+
+            Gson gson = new Gson();
+            FileReader reader = new FileReader(file);
+            userDatabase database = gson.fromJson(reader, userDatabase.class);
+            reader.close();
+
+            for (userEntry u : database.users) {
+                if (u.id.equals(userId)) {
+                    return u.incomes != null ? u.incomes : new ArrayList<>();
+                }
+            }
+            return new ArrayList<>();
+        } catch (Exception e) {
+            System.out.println("Error getting incomes: " + e.getMessage());
+            return new ArrayList<>();
+        }
     }
 
     /**
@@ -194,6 +418,8 @@ public class Budget {
     public void addGoal(double amount, String date) {
         goals.add(new Goal(amount, date));
         System.out.println("Goal added: " + "$" + Bold + Blue + amount + Reset + " by " + Bold + Blue + date + Reset);
+        saveToJson();
+        checkGoals();
     }
 
     /**
@@ -205,6 +431,7 @@ public class Budget {
     public void addReminder(String title, String date) {
         reminders.add(new Reminder(title, date));
         System.out.println("Reminder added: " + "$" + Bold + Blue + title + Reset + " on " + Bold + Blue + date + Reset);
+        saveToJson();
     }
 
     /**
@@ -217,12 +444,13 @@ public class Budget {
      * @param source The recipient of the donation
      */
     public void addDonate(double amount, String source) {
-        if (totalDonates + amount > budget) {
+        if (totalDonates + amount > totalIncome) {
             System.out.println("Exceeded budget, you cannot add this donate!");
         } else {
             donates.add(new Donate(amount, source));
             totalDonates += amount;
             System.out.println("Donate added: " + "$" + Bold + Blue + amount + Reset + " to " + Bold + Blue + source + Reset);
+            saveToJson();
         }
     }
 
@@ -236,12 +464,31 @@ public class Budget {
      * @param source The creditor of the debt
      */
     public void addDebt(double amount, String source) {
-        if (totalDebts + amount > budget) {
+        if (totalDebts + amount > totalIncome) {
             System.out.println("Exceeded budget, you cannot repayment this debt!");
         } else {
             debts.add(new Debt(amount, source));
             totalDebts += amount;
             System.out.println("Debt added: " + "$" + Bold + Blue + amount + Reset + " to " + Bold + Blue + source + Reset);
+            saveToJson();
+        }
+    }
+
+    private void checkGoals() {
+        Iterator<Goal> iterator = goals.iterator();
+        List<Goal> achievedGoals = new ArrayList<>();
+
+        while (iterator.hasNext()) {
+            Goal goal = iterator.next();
+            if (totalIncome - totalExpense >= goal.amount){
+                System.out.println(Bold + Green + "You achieved your goal: " + goal.amount + "$" + Reset);
+                achievedGoals.add(goal);
+                iterator.remove();
+            }
+        }
+
+        if (!achievedGoals.isEmpty()) {
+            saveToJson();
         }
     }
 
