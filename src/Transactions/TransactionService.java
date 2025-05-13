@@ -120,10 +120,9 @@ public class TransactionService {
      * A password is required for security verification.
      *
      * @param id       The ID of the recurring transaction to cancel
-     * @param password The user's password for verification
      * @return true if successfully canceled, false if not found or already inactive
      */
-    public boolean cancelRecurringTransaction(int id, String password) {
+    public boolean cancelRecurringTransaction(int id) {
         for (Transaction rt : recurringTransactions) {
             if (rt.getId() == id && rt.isActive()) {
                 rt.setActive(false);
