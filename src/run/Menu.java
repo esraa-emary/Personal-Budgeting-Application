@@ -6,6 +6,7 @@ import static income.Budget.manageBudgets;
 import static run.Format.*;
 
 import Transactions.TransactionController;
+import authentication.Validation;
 import income.Budget;
 import income.Income;
 import income.Expense;
@@ -37,9 +38,9 @@ import java.util.Iterator;
  *
  * @author Budget Application Team
  * @version 1.0
- * @see income.Budget
- * @see Transactions.TransactionController
- * @see authentication.Validation
+ * @see Budget
+ * @see TransactionController
+ * @see Validation
  */
 
 public class Menu {
@@ -63,7 +64,7 @@ public class Menu {
      * Continues prompting until the user enters a valid number.
      *
      * @return The validated numeric input as an integer
-     * @see authentication.Validation#isValidNumber(String)
+     * @see Validation#isValidNumber(String)
      */
     public static int checkValidity() {
         String checkNumber = input.nextLine();
@@ -82,7 +83,7 @@ public class Menu {
      * Continues prompting until the user enters a valid number.
      *
      * @return The validated amount as an integer
-     * @see authentication.Validation#isValidAmount(String)
+     * @see Validation#isValidAmount(String)
      */
 
     public static int checkAmount() {
@@ -100,7 +101,7 @@ public class Menu {
      * Continues prompting until the user enters a valid date.
      *
      * @return The validated date as a string in YYYY-MM-DD format
-     * @see authentication.Validation#isValidDate(String)
+     * @see Validation#isValidDate(String)
      */
 
     public static String checkDate() {
@@ -161,22 +162,22 @@ public class Menu {
     public static int displayMainMenuIncome() {
         System.out.println(Bold + Cyan + "\n<------- Welcome To Income Section\n" + Reset);
         System.out.println(Bold + "Please choose an option from the menu below: \n" + Reset);
-        System.out.println(Bold + "1 -> Add Budget." + Reset);
-        System.out.println(Bold + "2 -> Add Expense." + Reset);
-        System.out.println(Bold + "3 -> Add Income." + Reset);
-        System.out.println(Bold + "4 -> Add Goal." + Reset);
-        System.out.println(Bold + "5 -> Add Reminder." + Reset);
+        System.out.println(Bold + "1 -> Edit Budget" + Reset);
+        System.out.println(Bold + "2 -> Add Expense" + Reset);
+        System.out.println(Bold + "3 -> Add Income" + Reset);
+        System.out.println(Bold + "4 -> Add Goal" + Reset);
+        System.out.println(Bold + "5 -> Add Reminder" + Reset);
         System.out.println(Bold + "6 -> Manage Budgets" + Reset);
 
-        System.out.println(Bold + "7 -> Display Budgets." + Reset);
-        System.out.println(Bold + "8 -> Display Expenses." + Reset);
-        System.out.println(Bold + "9 -> Display Incomes." + Reset);
-        System.out.println(Bold + "10 -> Display Goals." + Reset);
-        System.out.println(Bold + "11 -> Display Reminders." + Reset);
+        System.out.println(Bold + "7 -> Display Chosen Budget" + Reset);
+        System.out.println(Bold + "8 -> Display Expenses" + Reset);
+        System.out.println(Bold + "9 -> Display Incomes" + Reset);
+        System.out.println(Bold + "10 -> Display Goals" + Reset);
+        System.out.println(Bold + "11 -> Display Reminders" + Reset);
 
-        System.out.println(Bold + "12 -> Send Reminder." + Reset);
+        System.out.println(Bold + "12 -> Send Reminder" + Reset);
 
-        System.out.println(Bold + Red + "13 -> Back." + Reset);
+        System.out.println(Bold + Red + "13 -> Back" + Reset);
         System.out.printf(Bold + "choose an option: " + Reset);
         return checkValidity();
     }
@@ -197,21 +198,21 @@ public class Menu {
      * </ul>
      *
      * @return The user's selected option (1-7)
-     * @see income.Budget#addDebt(double, String)
-     * @see income.Budget#addDonate(double, String)
-     * @see Transactions.TransactionController
+     * @see Budget#addDebt(double, String)
+     * @see Budget#addDonate(double, String)
+     * @see TransactionController
      */
 
     public static int displayMainMenuPayment() {
         System.out.println(Bold + Cyan + "\n<------- Welcome To Payment Section\n" + Reset);
         System.out.println(Bold + "Please choose an option from the menu below: \n" + Reset);
-        System.out.println(Bold + "1 -> Transactions Department." + Reset);
-        System.out.println(Bold + "2 -> Add Debt Repayment." + Reset);
-        System.out.println(Bold + "3 -> Add Donate." + Reset);
-        System.out.println(Bold + "4 -> Display Debts Repayment." + Reset);
-        System.out.println(Bold + "5 -> Display Donates." + Reset);
-        System.out.println(Bold + "6 -> Financial Reports." + Reset);
-        System.out.println(Bold + Red + "7 -> Back." + Reset);
+        System.out.println(Bold + "1 -> Transactions Department" + Reset);
+        System.out.println(Bold + "2 -> Add Debt Repayment" + Reset);
+        System.out.println(Bold + "3 -> Add Donate" + Reset);
+        System.out.println(Bold + "4 -> Display Debts Repayment" + Reset);
+        System.out.println(Bold + "5 -> Display Donates" + Reset);
+        System.out.println(Bold + "6 -> Financial Reports" + Reset);
+        System.out.println(Bold + Red + "7 -> Back" + Reset);
         System.out.printf(Bold + "choose an option: " + Reset);
         return checkValidity();
     }
@@ -237,7 +238,7 @@ public class Menu {
      */
 
     public static void optionsIncome(int innerChoice, Budget bt, String fileName, Scanner external_input) {
-        String source, date, title;
+        String source = "", date, title;
         double amount;
         int counter;
         switch (innerChoice) {
@@ -245,13 +246,19 @@ public class Menu {
                 boolean case1_valid = false;
                 while (!case1_valid) {
                     try {
-                        System.out.print(Bold + "Please enter your" + Green + " budget" + Reset + Bold + " amount: " + Reset);
+                        System.out.print(Bold + "Please enter new" + Green + " budget" + Reset + Bold + " amount for '" + bt.budgetName + "': " + Reset);
                         double bud_amount2;
                         do {
                             bud_amount2 = checkAmount();
                         } while (bud_amount2 <= 0);
+
+                        // Update the budget amount
                         bt.setBudget(bud_amount2);
-                        bt.saveData(fileName);
+
+                        // Save using the new JSON-based method instead of the old file method
+                        bt.saveToJson();
+
+                        System.out.println(Bold + Green + "Budget amount updated successfully!" + Reset);
                         case1_valid = true;
                     } catch (Exception e) {
                         System.out.println(Bold + Red + "Invalid input, please try again" + Reset);
@@ -259,13 +266,12 @@ public class Menu {
                     }
                 }
                 break;
-
             case 2:
                 double am = 0;
                 boolean case2_valid = false;
                 while (!case2_valid) {
                     try {
-                        System.out.print("How much did you pay: ");
+                        System.out.print(Bold + "How much did you pay for '" + bt.budgetName + "': " + Reset);
                         do {
                             am = checkAmount();
                         } while (am <= 0);
@@ -275,7 +281,7 @@ public class Menu {
                         external_input.next();
                     }
                 }
-                System.out.print("What did you exactly pay for: ");
+                System.out.print(Bold + "What did you exactly pay for: " + Reset);
                 String cat = external_input.nextLine();
                 while (cat.isEmpty()) {
                     System.out.println(Red + Bold + "\nInvalid input, please try again" + Reset);
@@ -283,36 +289,38 @@ public class Menu {
                 }
 
                 bt.addExpense(am, cat);
-                bt.saveData(fileName);
+                bt.saveToJson(); // Using the new JSON saving method instead of file-based approach
                 break;
-
             case 3:
-                System.out.print("Enter Source of income: ");
-                source = external_input.nextLine();
-                while (source.isEmpty()) {
-                    System.out.println(Red + Bold + "\nInvalid input, please try again" + Reset);
-                    source = external_input.nextLine();
-                }
+                boolean case3_valid = false;
+                double incomeAmount = 0;
+                while (!case3_valid) {
+                    try {
+                        System.out.print(Bold + "Enter Source of income: " + Reset);
+                        source = external_input.nextLine();
+                        while (source.isEmpty()) {
+                            System.out.println(Red + Bold + "\nInvalid input, please try again" + Reset);
+                            source = external_input.nextLine();
+                        }
 
-                System.out.print("How much is the amount of income: ");
-                do {
-                    amount = checkAmount();
-                } while (amount <= 0);
-
-                bt.addIncome(amount, source);
-                bt.saveData(fileName);
-
-                Iterator<Goal> iterator = bt.goals.iterator();
-                while (iterator.hasNext()) {
-                    Goal g = iterator.next();
-                    if (bt.totalIncome - bt.totalExpense >= g.amount) {
-                        System.out.println(Bold + Red + "You got your goal: " + g.amount + "$" + Reset);
-                        iterator.remove();
+                        System.out.print(Bold + "How much is the amount of income: " + Reset);
+                        do {
+                            incomeAmount = checkAmount();
+                        } while (incomeAmount <= 0);
+                        case3_valid = true;
+                    } catch (Exception e) {
+                        System.out.println(Bold + Red + "Invalid input, please try again" + Reset);
+                        external_input.next();
                     }
                 }
-                break;
 
+                // Add income to the user's general income list in the JSON file
+                // The method already handles JSON file saving and goal checking internally
+                bt.addIncome(incomeAmount, source);
+
+                break;
             case 4:
+                System.out.println(Bold + "Adding goal to budget: " + Cyan + bt.budgetName + Reset);
                 System.out.print("Enter date you want as (YYYY-MM-DD): ");
                 date = checkDate();
                 System.out.print("How much is the amount of money is your goal by then: ");
@@ -321,10 +329,11 @@ public class Menu {
                 } while (amount <= 0);
 
                 bt.addGoal(amount, date);
-                bt.saveData(fileName);
+                bt.saveToJson(); // Use JSON saving instead of file-based approach
                 break;
 
             case 5:
+                System.out.println(Bold + "Adding reminder to budget: " + Cyan + bt.budgetName + Reset);
                 System.out.print("Enter date you want as (YYYY-MM-DD): ");
                 date = checkDate();
                 System.out.print("What is the title of this reminder: ");
@@ -335,9 +344,8 @@ public class Menu {
                 }
 
                 bt.addReminder(title, date);
-                bt.saveData(fileName);
+                bt.saveToJson(); // Use JSON saving instead of file-based approach
                 break;
-
 
             case 6:
                 String userId = getCurrentUserId(fileName);
@@ -349,6 +357,7 @@ public class Menu {
                 break;
 
             case 7:
+                System.out.println(Bold + Cyan + "Budget: " + bt.budgetName + Reset);
                 System.out.println("Your still have from you budget: " + Bold + Green + (bt.getBudget() - bt.totalExpense - bt.totalDonates - bt.totalDebts) + "$" + Reset);
                 System.out.println("For expenses: " + Bold + Green + (bt.totalExpense) + "$" + Reset);
                 System.out.println("For donates: " + Bold + Green + (bt.totalDonates) + "$" + Reset);
@@ -357,6 +366,7 @@ public class Menu {
                 break;
 
             case 8:
+                System.out.println(Bold + Cyan + "Budget: " + bt.budgetName + Reset);
                 System.out.println("Your" + Bold + Red + " Expenses" + Reset + Bold + " are:" + Reset);
 
                 counter = 1;
@@ -364,21 +374,23 @@ public class Menu {
                     System.out.println(Bold + counter + "- " + Red + e.amount + "$" + Reset + " for " + Bold + Blue + e.category + Reset);
                     counter++;
                 }
-                System.out.println("Which results in a total of: " + Bold + Red + bt.totalExpense + Reset + "\n");
+                System.out.println("Which results in a total of: " + Bold + Red + bt.totalExpense + "$" + Reset + "\n");
                 break;
 
             case 9:
-                System.out.println("Your" + Bold + Red + " Income" + Reset + Bold + " are:" + Reset);
+                System.out.println("Your" + Bold + Red + " Income" + Reset + Bold + " (across all budgets) are:" + Reset);
 
                 counter = 1;
-                for (Income i : bt.incomes) {
+                // Get incomes from JSON file using the getIncomes method
+                for (Income i : bt.getIncomes()) {
                     System.out.println(Bold + counter + "- " + Red + i.amount + "$" + Reset + " from " + Bold + Blue + i.source + Reset);
                     counter++;
                 }
-                System.out.println("Which results in a total of: " + Bold + Red + bt.totalIncome + Reset + "\n");
+                System.out.println("Which results in a total of: " + Bold + Red + bt.totalIncome + "$" + Reset + "\n");
                 break;
 
             case 10:
+                System.out.println(Bold + Cyan + "Budget: " + bt.budgetName + Reset);
                 System.out.println("Your" + Bold + Red + " Goals" + Reset + Bold + " are:" + Reset);
 
                 counter = 1;
@@ -389,6 +401,7 @@ public class Menu {
                 break;
 
             case 11:
+                System.out.println(Bold + Cyan + "Budget: " + bt.budgetName + Reset);
                 System.out.println("Your" + Bold + Red + " Reminders" + Reset + Bold + " are:" + Reset);
 
                 counter = 1;
@@ -403,7 +416,7 @@ public class Menu {
                 break;
 
             default:
-                System.out.println("Invalid option. Please choose a number between 1 and 13.");
+                System.out.println(Red + Bold + "Invalid option. Please choose a number between 1 and 13." + Reset);
                 break;
         }
     }
@@ -442,7 +455,7 @@ public class Menu {
                     System.out.println(Red + Bold + "\nInvalid input, please try again" + Reset);
                     source = external_input.nextLine();
                 }
-                
+
                 System.out.print("How much is the amount of debt: ");
                 do {
                     amount = checkAmount();
@@ -459,7 +472,7 @@ public class Menu {
                     System.out.println(Red + Bold + "\nInvalid input, please try again" + Reset);
                     source = external_input.nextLine();
                 }
-                
+
                 System.out.print("How much is the amount of money: ");
                 do {
                     amount = checkAmount();

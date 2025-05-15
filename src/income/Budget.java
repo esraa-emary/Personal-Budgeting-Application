@@ -116,7 +116,7 @@ public class Budget {
 
     private String userId;
     private String budgetId;
-    private String budgetName;
+    public String budgetName;
     public double totalIncome;
 
     /**
@@ -401,7 +401,6 @@ public class Budget {
      */
 
     public static Budget manageBudgets(String userId) {
-
         try {
             File file = new File("files/users_db.json");
             if (!file.exists()) {
@@ -416,7 +415,6 @@ public class Budget {
 
             userEntry user = null;
             for (userEntry u : database.users) {
-
                 if (u.id.equals(userId)) {
                     user = u;
                     break;
@@ -432,7 +430,8 @@ public class Budget {
             System.out.println(Bold + "1 -> Switch Budget" + Reset);
             System.out.println(Bold + "2 -> Create New Budget" + Reset);
             System.out.println(Bold + "3 -> Delete Budget" + Reset);
-            System.out.println(Bold + Red + "4 -> Back" + Reset);
+            System.out.println(Bold + "4 -> Display All Budgets" + Reset);
+            System.out.println(Bold + Red + "5 -> Back" + Reset);
             System.out.printf(Bold + "Choose an option: " + Reset);
 
             int choice = checkValidity();
@@ -450,13 +449,78 @@ public class Budget {
                     deleteBudget(userId, user.budgets);
                     return null;
                 case 4:
+                    displayAllBudgets(userId, user.budgets);
+                    return manageBudgets(userId); // Return to budget management menu after displaying
+                case 5:
                 default:
                     return null;
             }
         } catch (Exception e) {
-
             System.out.println(Red + "Error managing budgets: " + e.getMessage() + Reset);
             return null;
+        }
+    }
+
+    /**
+     * Displays detailed information about all budgets belonging to a user.
+     *
+     * @param userId  The ID of the user whose budgets are being displayed
+     * @param budgets The list of budget data objects for the user
+     */
+    private static void displayAllBudgets(String userId, List<Budget_data> budgets) {
+        if (budgets == null || budgets.isEmpty()) {
+            System.out.println(Yellow + "No budgets available to display." + Reset);
+            return;
+        }
+
+        System.out.println(Bold + Cyan + "\n<------- All Budgets Summary ------->\n" + Reset);
+
+        int counter = 1;
+        for (Budget_data budgetData : budgets) {
+            // Load the full budget to get all details
+            Budget budget = loadBudget(userId, budgetData.getBudgetId());
+
+            if (budget != null) {
+                System.out.println(Bold + "\n" + counter + ". Budget: " + Green + budget.budgetName + Reset);
+                System.out.println("   Budget Amount: " + Bold + Green + budget.getBudget() + "$" + Reset);
+                System.out.println("   Remaining Budget: " + Bold + Green + (budget.getBudget() - budget.totalExpense - budget.totalDonates - budget.totalDebts) + "$" + Reset);
+                System.out.println("   Total Expenses: " + Bold + Red + budget.totalExpense + "$" + Reset);
+                System.out.println("   Total Income: " + Bold + Green + budget.totalIncome + "$" + Reset);
+                System.out.println("   Total Donations: " + Bold + Blue + budget.totalDonates + "$" + Reset);
+                System.out.println("   Total Debts: " + Bold + Purple + budget.totalDebts + "$" + Reset);
+
+                // Display expenses
+                if (!budget.expenses.isEmpty()) {
+                    System.out.println("   " + Bold + "Expenses:" + Reset);
+                    int expCounter = 1;
+                    for (Expense e : budget.expenses) {
+                        System.out.println("     " + expCounter + ". " + Red + e.amount + "$" + Reset + " for " + Blue + e.category + Reset);
+                        expCounter++;
+                    }
+                }
+
+                // Display goals
+                if (!budget.goals.isEmpty()) {
+                    System.out.println("   " + Bold + "Goals:" + Reset);
+                    int goalCounter = 1;
+                    for (Goal g : budget.goals) {
+                        System.out.println("     " + goalCounter + ". Get " + Green + g.amount + "$" + Reset + " by " + Blue + g.date + Reset);
+                        goalCounter++;
+                    }
+                }
+
+                // Display reminders
+                if (!budget.reminders.isEmpty()) {
+                    System.out.println("   " + Bold + "Reminders:" + Reset);
+                    int remCounter = 1;
+                    for (Reminder r : budget.reminders) {
+                        System.out.println("     " + remCounter + ". " + Yellow + r.title + Reset + " on " + Blue + r.date + Reset);
+                        remCounter++;
+                    }
+                }
+
+                counter++;
+            }
         }
     }
 
@@ -602,6 +666,11 @@ public class Budget {
         }
     }
 
+    public double getBudget() {
+
+        return this.budget;
+    }
+
     /**
      * Sets the budget to a new amount.
      *
@@ -612,13 +681,118 @@ public class Budget {
     }
 
     /**
-     * Retrieves the current budget amount.
+     * Creates a default budget for a user with no existing budgets.
      *
-     * @return The current budget amount
+     * @param userId The ID of the user
+     * @return A new Budget object
      */
-    public double getBudget() {
+
+
+    private static Budget createDefaultBudget(String userId) {
+        Budget budget = new Budget(userId, "Main Budget", 0.0);
+        budget.saveToJson();
+        System.out.println(Bold + Green + "Created new default budget" + Reset);
         return budget;
     }
+
+    /**
+     * Gets an existing budget for the user or creates a new one.
+     *
+     * @param userId The ID of the user
+     * @return A Budget object
+     */
+    public static Budget getUserBudget(String userId) {
+        try {
+            File file = new File("files/users_db.json");
+            if (!file.exists()) {
+                System.out.println("User database not found");
+                return createDefaultBudget(userId);
+            }
+
+            Gson gson = new Gson();
+            FileReader reader = new FileReader(file);
+            userDatabase database = gson.fromJson(reader, userDatabase.class);
+            reader.close();
+
+            for (userEntry user : database.users) {
+                if (user.id.equals(userId)) {
+                    // Check if user has any budgets
+                    if (user.budgets != null && !user.budgets.isEmpty()) {
+                        // If multiple budgets, let user select one
+                        if (user.budgets.size() > 1) {
+                            return selectUserBudget(userId, user.budgets);
+                        } else {
+                            // Just use the only budget
+                            return Budget.loadBudget(userId, user.budgets.get(0).getBudgetId());
+                        }
+                    } else {
+                        // Create a default budget if none exists
+                        return createDefaultBudget(userId);
+                    }
+                }
+            }
+
+            // User not found, create default budget
+            return createDefaultBudget(userId);
+        } catch (Exception e) {
+            System.out.println("Error loading user budget: " + e.getMessage());
+            return createDefaultBudget(userId);
+        }
+    }
+
+
+    /**
+     * Displays a menu to let the user select from multiple budgets.
+     *
+     * @param userId  The ID of the user
+     * @param budgets The list of available budgets
+     * @return The selected Budget object
+     */
+    public static Budget selectUserBudget(String userId, List<Budget_data> budgets) {
+        Scanner input = new Scanner(System.in);
+
+        System.out.println(Bold + Cyan + "\n<------- Your Budgets ------->\n" + Reset);
+        for (int i = 0; i < budgets.size(); i++) {
+            System.out.println(Bold + (i + 1) + " -> " + budgets.get(i).getBudgetName() +
+                    " ($" + budgets.get(i).getBudget() + ")" + Reset);
+        }
+        System.out.println(Bold + (budgets.size() + 1) + " -> Create New Budget" + Reset);
+        System.out.printf(Bold + "Choose a budget: " + Reset);
+
+        int selection = -1;
+        while (selection < 1 || selection > budgets.size() + 1) {
+            try {
+                selection = Integer.parseInt(input.nextLine());
+                if (selection < 1 || selection > budgets.size() + 1) {
+                    System.out.println(Red + Bold + "Invalid option. Please try again: " + Reset);
+                }
+            } catch (NumberFormatException e) {
+                System.out.println(Red + Bold + "Please enter a number: " + Reset);
+            }
+        }
+
+        // Create new budget if selected
+        if (selection == budgets.size() + 1) {
+            System.out.print(Bold + "Enter budget name: " + Reset);
+            String budgetName = input.nextLine();
+
+            System.out.print(Bold + "Enter initial amount: " + Reset);
+            double initialAmount = 0.0;
+            try {
+                initialAmount = Double.parseDouble(input.nextLine());
+            } catch (NumberFormatException e) {
+                System.out.println(Red + "Invalid amount, using 0.0" + Reset);
+            }
+
+            Budget newBudget = new Budget(userId, budgetName, initialAmount);
+            newBudget.saveToJson();
+            return newBudget;
+        } else {
+            // Load the selected budget
+            return Budget.loadBudget(userId, budgets.get(selection - 1).getBudgetId());
+        }
+    }
+
 
     /**
      * Adds a new expense if it doesn't exceed the budget.

@@ -1,1 +1,190 @@
-{"users":[{"id":"1","filename":"MohamedEhab1","username":"Mohamed Ehab","email":"messk8@gmail.com","password":"123456","createdAt":"14:53:27.984333800+03:00","lastLogin":"19:14:11.289863100+03:00","current":false,"budgets":[{"budgetId":"budget1","budgetName":"Monthly Budget","budget":5000.0,"totalExpenses":0.0,"totalIncome":6000.0,"totalDonates":300.0,"totalDebts":500.0,"expenses":[{"category":"Groceries","amount":500.0},{"category":"Rent","amount":700.0}],"goals":[{"date":"2024-12-25","amount":10000.0}],"reminders":[{"date":"2024-06-01","title":"Pay rent"}],"donates":[{"source":"Red Cross","amount":300.0}],"debts":[{"source":"Credit Card","amount":500.0}]}],"incomes":[{"source":"Salary","amount":5000.0},{"source":"Freelance","amount":1000.0}]},{"id":"2","filename":"MohamedEhabSabry2","username":"Mohamed Ehab Sabry","email":"messk8@gmail.com","password":"123456","createdAt":"19:12:55.031116300+03:00","lastLogin":"19:14:11.297448+03:00","current":false,"budgets":[],"incomes":[]},{"id":"3","filename":"Esraa3","username":"Esraa","email":"esraa@gmail.com","password":"123456","createdAt":"20:44:36.312612300+03:00","lastLogin":"20:44:36.331129200+03:00","current":false,"budgets":[{"budgetId":"budget3eea95bd","budget":0.0,"totalExpenses":0.0,"totalIncome":0.0,"totalDonates":0.0,"totalDebts":0.0,"expenses":[],"incomes":[],"goals":[],"reminders":[],"donates":[],"debts":[]},{"budgetId":"budget880ede8a","budget":1000.0,"totalExpenses":0.0,"totalIncome":0.0,"totalDonates":0.0,"totalDebts":0.0,"expenses":[],"incomes":[],"goals":[],"reminders":[],"donates":[],"debts":[]}],"incomes":[]},{"id":"4","filename":"good4","username":"good","email":"good@gmail.com","password":"123456","createdAt":"22:00:28.178326500+03:00","lastLogin":"22:00:28.202449100+03:00","current":true,"budgets":[{"budgetId":"budgeta75fe785","budgetName":"Car","budget":6000.0,"totalExpenses":0.0,"totalIncome":0.0,"totalDonates":0.0,"totalDebts":0.0,"expenses":[],"incomes":[],"goals":[],"reminders":[],"donates":[],"debts":[]},{"budgetId":"budget88514076","budgetName":"Main Budget","budget":6000.0,"totalExpenses":400.0,"totalIncome":0.0,"totalDonates":0.0,"totalDebts":0.0,"expenses":[{"category":"car","amount":400.0}],"incomes":[],"goals":[],"reminders":[],"donates":[],"debts":[]}],"incomes":[]}]}
+{
+  "users": [
+    {
+      "id": "1",
+      "filename": "MohamedEhab1",
+      "username": "Mohamed Ehab",
+      "email": "messk8@gmail.com",
+      "password": "123456",
+      "createdAt": "14:53:27.984333800+03:00",
+      "lastLogin": "19:14:11.289863100+03:00",
+      "current": false,
+      "budgets": [
+        {
+          "budgetId": "budget1",
+          "budgetName": "Monthly Budget",
+          "budget": 5000.0,
+          "totalExpenses": 0.0,
+          "totalIncome": 6000.0,
+          "totalDonates": 300.0,
+          "totalDebts": 500.0,
+          "expenses": [
+            {
+              "category": "Groceries",
+              "amount": 500.0
+            },
+            {
+              "category": "Rent",
+              "amount": 700.0
+            }
+          ],
+          "goals": [
+            {
+              "date": "2024-12-25",
+              "amount": 10000.0
+            }
+          ],
+          "reminders": [
+            {
+              "date": "2024-06-01",
+              "title": "Pay rent"
+            }
+          ],
+          "donates": [
+            {
+              "source": "Red Cross",
+              "amount": 300.0
+            }
+          ],
+          "debts": [
+            {
+              "source": "Credit Card",
+              "amount": 500.0
+            }
+          ]
+        }
+      ],
+      "incomes": [
+        {
+          "source": "Salary",
+          "amount": 5000.0
+        },
+        {
+          "source": "Freelance",
+          "amount": 1000.0
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "filename": "MohamedEhabSabry2",
+      "username": "Mohamed Ehab Sabry",
+      "email": "messk8@gmail.com",
+      "password": "123456",
+      "createdAt": "19:12:55.031116300+03:00",
+      "lastLogin": "19:14:11.297448+03:00",
+      "current": false,
+      "budgets": [],
+      "incomes": []
+    },
+    {
+      "id": "3",
+      "filename": "Esraa3",
+      "username": "Esraa",
+      "email": "esraa@gmail.com",
+      "password": "123456",
+      "createdAt": "20:44:36.312612300+03:00",
+      "lastLogin": "20:44:36.331129200+03:00",
+      "current": false,
+      "budgets": [
+        {
+          "budgetId": "budget3eea95bd",
+          "budget": 0.0,
+          "totalExpenses": 0.0,
+          "totalIncome": 0.0,
+          "totalDonates": 0.0,
+          "totalDebts": 0.0,
+          "expenses": [],
+          "incomes": [],
+          "goals": [],
+          "reminders": [],
+          "donates": [],
+          "debts": []
+        },
+        {
+          "budgetId": "budget880ede8a",
+          "budget": 1000.0,
+          "totalExpenses": 0.0,
+          "totalIncome": 0.0,
+          "totalDonates": 0.0,
+          "totalDebts": 0.0,
+          "expenses": [],
+          "incomes": [],
+          "goals": [],
+          "reminders": [],
+          "donates": [],
+          "debts": []
+        }
+      ],
+      "incomes": []
+    },
+    {
+      "id": "4",
+      "filename": "good4",
+      "username": "good",
+      "email": "good@gmail.com",
+      "password": "123456",
+      "createdAt": "22:00:28.178326500+03:00",
+      "lastLogin": "15:33:57.752840700+03:00",
+      "current": true,
+      "budgets": [
+        {
+          "budgetId": "budgeta75fe785",
+          "budgetName": "Car",
+          "budget": 9000.0,
+          "totalExpenses": 0.0,
+          "totalIncome": 0.0,
+          "totalDonates": 0.0,
+          "totalDebts": 0.0,
+          "expenses": [],
+          "incomes": [],
+          "goals": [],
+          "reminders": [],
+          "donates": [],
+          "debts": []
+        },
+        {
+          "budgetId": "budget88514076",
+          "budgetName": "Main Budget",
+          "budget": 6000.0,
+          "totalExpenses": 400.0,
+          "totalIncome": 0.0,
+          "totalDonates": 0.0,
+          "totalDebts": 0.0,
+          "expenses": [
+            {
+              "category": "car",
+              "amount": 400.0
+            }
+          ],
+          "incomes": [],
+          "goals": [],
+          "reminders": [],
+          "donates": [],
+          "debts": []
+        },
+        {
+          "budgetId": "budgetbf09462c",
+          "budgetName": "Personal Stuff",
+          "budget": 7000.0,
+          "totalExpenses": 0.0,
+          "totalIncome": 0.0,
+          "totalDonates": 0.0,
+          "totalDebts": 0.0,
+          "expenses": [],
+          "incomes": [],
+          "goals": [
+            {
+              "date": "2025-08-11",
+              "amount": 90000.0
+            }
+          ],
+          "reminders": [],
+          "donates": [],
+          "debts": []
+        }
+      ],
+      "incomes": []
+    }
+  ]
+}
