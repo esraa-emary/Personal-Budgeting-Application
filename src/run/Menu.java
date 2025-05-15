@@ -240,7 +240,7 @@ public class Menu {
      * @param external_input Scanner for reading additional input
      */
 
-    public static void optionsIncome(int innerChoice, Budget bt, String fileName, Scanner external_input) {
+    public static Budget optionsIncome(int innerChoice, Budget bt, String fileName, Scanner external_input) {
         String source = "", date, title;
         double amount;
         int counter;
@@ -423,6 +423,8 @@ public class Menu {
                 System.out.println(Red + Bold + "Invalid option. Please choose a number between 1 and 13." + Reset);
                 break;
         }
+
+        return bt;
     }
 
     /**

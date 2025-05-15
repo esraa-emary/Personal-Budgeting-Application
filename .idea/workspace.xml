@@ -6,11 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="d8d78022-7fa9-4c6b-8988-1f198cfd9836" name="Changes" comment="- Feat: Generated Javadoc.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/users_db.json" beforeDir="false" afterPath="$PROJECT_DIR$/files/users_db.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Transactions/TransactionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Transactions/TransactionService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/income/Budget.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/income/Budget.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/run/Menu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/run/Menu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/income/Budget.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/income/Budget.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/run/Menu.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/run/Menu.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,26 +48,26 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.Main.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "dart.analysis.tool.window.visible": "false",
-    "git-widget-placeholder": "main",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "F:/FCAI/Second year assignment/Second term/software/assignment2/Personal-Budgeting-Applicationfff",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Life/FCAI_Stuff/Second_Year/2nd_Term/SWE/Assignments/Personal-Budgeting-Application/files&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Life\FCAI_Stuff\Second_Year\2nd_Term\SWE\Assignments\Personal-Budgeting-Application\files" />
@@ -99,7 +99,6 @@
       <workItem from="1747136804999" duration="19628000" />
       <workItem from="1747232959917" duration="1112000" />
       <workItem from="1747309736486" duration="2674000" />
-      <workItem from="1747317094575" duration="1717000" />
     </task>
     <task id="LOCAL-00001" summary="- Feat: Added Validation for emails and passwords while signing up.">
       <option name="closed" value="true" />

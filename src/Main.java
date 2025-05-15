@@ -83,7 +83,8 @@ public class Main {
                     innerChoice = Menu.displayMainMenuIncome();
                     while (innerChoice != 13) {
                         System.out.print("\n");
-                        optionsIncome(innerChoice, bt, filename, sub_menu_input);
+                        // Change this line to capture the returned budget
+                        bt = optionsIncome(innerChoice, bt, filename, sub_menu_input);
                         innerChoice = Menu.displayMainMenuIncome();
                     }
                     break;
