@@ -92,7 +92,7 @@ public class Main {
                     innerChoice = Menu.displayMainMenuPayment();
                     while (innerChoice != 7) {
                         System.out.print("\n");
-                        optionsPayment(innerChoice, bt, filename, sub_menu_input, tc);
+                        optionsPayment(innerChoice, bt, filename, sub_menu_input, tc,ts);
                         innerChoice = Menu.displayMainMenuPayment();
                     }
                     break;

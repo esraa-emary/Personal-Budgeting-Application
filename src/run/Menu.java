@@ -5,7 +5,9 @@ import static income.Budget.getCurrentUserId;
 import static income.Budget.manageBudgets;
 import static run.Format.*;
 
+import Transactions.Transaction;
 import Transactions.TransactionController;
+import Transactions.TransactionService;
 import authentication.Validation;
 import income.Budget;
 import income.Income;
@@ -15,6 +17,7 @@ import income.Reminder;
 import payment.Debt;
 import payment.Donate;
 
+import java.util.List;
 import java.util.Scanner;
 import java.util.Iterator;
 
@@ -357,12 +360,12 @@ public class Menu {
                 break;
 
             case 7:
-                System.out.println(Bold + Cyan + "Budget: " + bt.budgetName + Reset);
-                System.out.println("Your still have from you budget: " + Bold + Green + (bt.getBudget() - bt.totalExpense - bt.totalDonates - bt.totalDebts) + "$" + Reset);
+
+                System.out.println("Your still have from you budget: " + Bold + Green + (bt.getBudget() - bt.totalExpense) + "$" + Reset);
                 System.out.println("For expenses: " + Bold + Green + (bt.totalExpense) + "$" + Reset);
                 System.out.println("For donates: " + Bold + Green + (bt.totalDonates) + "$" + Reset);
                 System.out.println("For debts: " + Bold + Green + (bt.totalDebts) + "$" + Reset);
-                System.out.println("You still have from you income: " + Bold + Green + (bt.totalIncome - bt.totalExpense) + "$" + Reset);
+                System.out.println("You still have from you income: " + Bold + Green + (bt.totalIncome - bt.getBudget() - bt.totalDonates - bt.totalDebts) + "$" + Reset);
                 break;
 
             case 8:
@@ -382,6 +385,7 @@ public class Menu {
 
                 counter = 1;
                 // Get incomes from JSON file using the getIncomes method
+                List<Income> incomes = bt.getIncomes();
                 for (Income i : bt.getIncomes()) {
                     System.out.println(Bold + counter + "- " + Red + i.amount + "$" + Reset + " from " + Bold + Blue + i.source + Reset);
                     counter++;
@@ -439,7 +443,7 @@ public class Menu {
      * @param tc             The transaction controller for recurring transaction management
      */
 
-    public static void optionsPayment(int innerChoice, Budget bt, String fileName, Scanner external_input, TransactionController tc) {
+    public static void optionsPayment(int innerChoice, Budget bt, String fileName, Scanner external_input, TransactionController tc, TransactionService ts) {
         String source;
         double amount;
         int counter;
@@ -503,22 +507,45 @@ public class Menu {
             case 6:
                 // income
                 System.out.println("Your total income is: " + Bold + Green + (bt.totalIncome) + "$\n" + Reset + "Which comes from:");
+
+                List<Income> incomes = bt.getIncomes();
                 counter = 1;
-                for (Income i : bt.incomes) {
+                for (Income i : incomes) {
                     System.out.println(Bold + counter + "- " + Red + i.amount + "$" + Reset + " from " + Bold + Blue + i.source + Reset);
                     counter++;
                 }
 
+                // debts
+                System.out.println("\nYour" + Bold + Red + " Debts" + Reset + Bold + " are:" + Reset);
+                counter = 1;
+                for (Debt r : bt.debts) {
+                    System.out.println(Bold + counter + "- debt for " + Red + r.source + Reset + " with " + Bold + Blue + r.amount + "$" + Reset);
+                    counter++;
+                }
+
+                // donates
+                System.out.println("\nYour" + Bold + Red + " Donates" + Reset + Bold + " are:" + Reset);
+                counter = 1;
+                for (Donate r : bt.donates) {
+                    System.out.println(Bold + counter + "- donate to " + Red + r.source + Reset + " by " + Bold + Blue + r.amount + "$" + Reset);
+                    counter++;
+                }
+
                 // budget
-                System.out.println("Your budget is: " + Bold + Green + (bt.budget) + "$\n" + Reset);
+                System.out.println("\nYour current budget is: " + Bold + Green + (bt.budget) + "$\n" + Reset);
 
                 // transaction
-                System.out.println("Your transactions come from:");
+                System.out.println("Your transactions from this budget come from:");
                 counter = 1;
-//                for (Transaction t : tc.) {
-//                    System.out.println(Bold + counter + "- " + Red + i.amount + "$" + Reset + " from " + Bold + Blue + i.source + Reset);
-//                    counter++;
-//                }
+                for (Transaction t : ts.recurringTransactions) {
+                    System.out.printf("ID: %d | %s | Amount: %.2f | Category: %s | Next: %s%n",
+                            t.getId(),
+                            t.getDescription(),
+                            t.getAmount(),
+                            t.getCategory(),
+                            t.getNextOccurrence());
+                    counter++;
+                }
                 break;
 
             default:

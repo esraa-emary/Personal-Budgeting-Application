@@ -157,7 +157,6 @@ public class Budget {
      */
 
     public static Budget loadBudget(String userId, String budgetId) {
-
         try {
             File file = new File(USERS_DB_FILE_PATH);
             if (!file.exists()) {
@@ -196,6 +195,7 @@ public class Budget {
                 System.out.println("Budget not found");
                 return null;
             }
+
 
             Budget budget = new Budget(budgetData.getBudget());
             budget.userId = userId;

@@ -35,7 +35,7 @@ public class TransactionService {
     /**
      * Collection of recurring transactions only
      */
-    private List<Transaction> recurringTransactions;
+    public List<Transaction> recurringTransactions;
 
     /**
      * Scheduler for processing recurring transactions
